@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 export default function SocialLogin() {
   return (
     <>
-      <div className=" mb-1 text-4xl ">
+      <div className=" text-center mb-1 text-4xl ">
         <button
           className="bg-white text-black-400 shadow-lg font-normal  square-full mr-4 p-3"
           type="button"
