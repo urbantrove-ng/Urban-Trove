@@ -1,0 +1,46 @@
+{
+  "name": "urban-trove-api",
+  "version": "1.0.0",
+  "description": "Urban Trove Ecommerce application Backend",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "serve": "nodemon server",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urbantrove-ng/Urban-Trove.git"
+  },
+  "keywords": [
+    "Urban",
+    "Trove",
+    "Ecommerce",
+    "Api",
+    "Backend"
+  ],
+  "author": "Urban Trove Developers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/urbantrove-ng/Urban-Trove/server/issues"
+  },
+  "homepage": "https://github.com/urbantrove-ng/Urban-Trove/server/#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
