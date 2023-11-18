@@ -6,7 +6,7 @@ import SocialLogin from "../../components/Account/SocialLogin";
 export default function SignupPage() {
   return (
     <>
-      <Header heading="Uncover Urban Gems with Urban Trove" />
+      <Header />
       <Signup />
       <SocialLogin />
       <Footer

@@ -27,9 +27,9 @@ export default function Login() {
 
   return (
     <>
-      <Header heading=" Uncover Urban Gems with Urban Trove" />
+      <Header />
       <form onSubmit={handleSubmit}>
-        <div className="-space-y-px">
+        <div>
           {fields.map((field) => (
             <Input
               key={field.id}
@@ -48,7 +48,6 @@ export default function Login() {
         <br />
         <FormExtra />
         <FormAction handleSubmit={handleSubmit} text="Login" />
-
         <Footer
           paragraph="Don't have an account? "
           linkName="Signup"

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Header from "../../components/Account/FormHeader";
-import FormExtra from "../../components/Account/FormExtra";
 import { forgotFields } from "../../constant/formFields";
 import FormAction from "../../components/Account/FormAction";
 import Input from "../../components/Account/input";
