@@ -1,20 +1,20 @@
 import { useState } from "react";
 import Header from "../../components/Account/FormHeader";
 import FormExtra from "../../components/Account/FormExtra";
-import { loginFields } from "../../constant/formFields";
+import { forgotFields } from "../../constant/formFields";
 import FormAction from "../../components/Account/FormAction";
 import Input from "../../components/Account/input";
 import Footer from "../../components/Account/FormFooter";
 
-const fields = loginFields;
+const fields = forgotFields;
 let fieldsState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
-export default function Login() {
-  const [loginState, setLoginState] = useState(fieldsState);
+export default function forgetPass() {
+  const [forgetPassState, setForgetPassState] = useState(fieldsState);
 
   const handleChange = (e) => {
-    setLoginState({ ...loginState, [e.target.id]: e.target.value });
+    setForgetPassState({ ...forgetPassState, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -34,7 +34,7 @@ export default function Login() {
             <Input
               key={field.id}
               handleChange={handleChange}
-              value={loginState[field.id]}
+              value={forgetPassState[field.id]}
               labelText={field.labelText}
               labelFor={field.labelFor}
               id={field.id}
@@ -45,9 +45,7 @@ export default function Login() {
             />
           ))}
         </div>
-        <br />
-        <FormExtra />
-        <FormAction handleSubmit={handleSubmit} text="Login" />
+        <FormAction handleSubmit={handleSubmit} text="Reset Password" />
 
         <Footer
           paragraph="Don't have an account? "

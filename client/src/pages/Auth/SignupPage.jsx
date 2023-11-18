@@ -1,5 +1,5 @@
-import Footer from "../../components/Account/Footer";
-import Header from "../../components/Account/Header";
+import Footer from "../../components/Account/FormFooter";
+import Header from "../../components/Account/FormHeader";
 import Signup from "../../components/Account/SignupForm";
 import SocialLogin from "../../components/Account/SocialLogin";
 

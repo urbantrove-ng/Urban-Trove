@@ -18,7 +18,7 @@ export default function FormExtra() {
 
       <div className="text-sm">
         <a
-          href="#"
+          href="/forgotpass"
           className="font-medium text-purple-600 hover:text-purple-500"
         >
           Forgot your password?
