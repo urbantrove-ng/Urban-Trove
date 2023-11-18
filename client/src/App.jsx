@@ -1,9 +1,9 @@
-import Router from "./Router";
+import ProjectRoutes from "./Router";
 
 function App() {
   return (
     <>
-      <Router />
+      <ProjectRoutes />
     </>
   );
 }

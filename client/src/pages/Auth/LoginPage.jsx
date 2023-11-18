@@ -27,33 +27,37 @@ export default function Login() {
 
   return (
     <>
-      <Header />
-      <form onSubmit={handleSubmit}>
-        <div>
-          {fields.map((field) => (
-            <Input
-              key={field.id}
-              handleChange={handleChange}
-              value={loginState[field.id]}
-              labelText={field.labelText}
-              labelFor={field.labelFor}
-              id={field.id}
-              name={field.name}
-              type={field.type}
-              isRequired={field.isRequired}
-              placeholder={field.placeholder}
+      <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <Header />
+          <form onSubmit={handleSubmit}>
+            <div>
+              {fields.map((field) => (
+                <Input
+                  key={field.id}
+                  handleChange={handleChange}
+                  value={loginState[field.id]}
+                  labelText={field.labelText}
+                  labelFor={field.labelFor}
+                  id={field.id}
+                  name={field.name}
+                  type={field.type}
+                  isRequired={field.isRequired}
+                  placeholder={field.placeholder}
+                />
+              ))}
+            </div>
+            <br />
+            <FormExtra />
+            <FormAction handleSubmit={handleSubmit} text="Login" />
+            <Footer
+              paragraph="Don't have an account? "
+              linkName="Signup"
+              linkUrl="/Signup"
             />
-          ))}
+          </form>
         </div>
-        <br />
-        <FormExtra />
-        <FormAction handleSubmit={handleSubmit} text="Login" />
-        <Footer
-          paragraph="Don't have an account? "
-          linkName="Signup"
-          linkUrl="/Signup"
-        />
-      </form>
+      </div>
     </>
   );
 }

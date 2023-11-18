@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 // import AuthContext from "../../store/auth-context";
 import { FaBars, FaCircle } from "react-icons/fa";
 import AuthContext from "../Account/AuthContext";
-AuthContext;
 
-export default function Navbar() {
+const Navbar = (props) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   const authCxt = useContext(AuthContext);
@@ -29,7 +28,7 @@ export default function Navbar() {
               }
               href="/"
             >
-              Ohion Bills
+              Urban Trove
             </a>
             <button
               className="cursor-pointer text-xl leading-none px-3 py-1  rounded  block lg:hidden outline-none focus:outline-none"
@@ -88,19 +87,7 @@ export default function Navbar() {
                   </a>
                 </li>
               )}
-              {!authCxt.isLoggedIn && (
-                <li className="flex items-center">
-                  <a
-                    className={
-                      "text-gray-800 hover:text-pink-600" +
-                      " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                    }
-                    href="/"
-                  >
-                    Service{" "}
-                  </a>
-                </li>
-              )}{" "}
+
               {!authCxt.isLoggedIn && (
                 <li className="flex items-center">
                   <Link
@@ -109,8 +96,7 @@ export default function Navbar() {
                       " text-xs font-bold uppercase px-4 p-3 rounded shadow hover:shadow-md outline-none  lg:mr-1 lg:mb-0 ml-3 mb-3"
                     }
                     type="button"
-                    to="/login"
-                    style={{ transition: "all .15s ease" }}
+                    to="/signup"
                   >
                     Get Started
                   </Link>
@@ -177,4 +163,6 @@ export default function Navbar() {
       </nav>
     </>
   );
-}
+};
+
+export default Navbar;

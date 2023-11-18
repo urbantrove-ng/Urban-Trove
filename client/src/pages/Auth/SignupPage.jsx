@@ -6,14 +6,18 @@ import SocialLogin from "../../components/Account/SocialLogin";
 export default function SignupPage() {
   return (
     <>
-      <Header />
-      <Signup />
-      <SocialLogin />
-      <Footer
-        paragraph="Already have an account? "
-        linkName="Login"
-        linkUrl="/"
-      />
+      <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <Header />
+          <Signup />
+          <SocialLogin />
+          <Footer
+            paragraph="Already have an account? "
+            linkName="Login"
+            linkUrl="/login"
+          />
+        </div>
+      </div>
     </>
   );
 }

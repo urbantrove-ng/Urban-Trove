@@ -26,32 +26,36 @@ export default function forgetPass() {
 
   return (
     <>
-      <Header heading=" Uncover Urban Gems with Urban Trove" />
-      <form onSubmit={handleSubmit}>
-        <div className="-space-y-px">
-          {fields.map((field) => (
-            <Input
-              key={field.id}
-              handleChange={handleChange}
-              value={forgetPassState[field.id]}
-              labelText={field.labelText}
-              labelFor={field.labelFor}
-              id={field.id}
-              name={field.name}
-              type={field.type}
-              isRequired={field.isRequired}
-              placeholder={field.placeholder}
-            />
-          ))}
-        </div>
-        <FormAction handleSubmit={handleSubmit} text="Reset Password" />
+      <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <Header heading=" Uncover Urban Gems with Urban Trove" />
+          <form onSubmit={handleSubmit}>
+            <div className="-space-y-px">
+              {fields.map((field) => (
+                <Input
+                  key={field.id}
+                  handleChange={handleChange}
+                  value={forgetPassState[field.id]}
+                  labelText={field.labelText}
+                  labelFor={field.labelFor}
+                  id={field.id}
+                  name={field.name}
+                  type={field.type}
+                  isRequired={field.isRequired}
+                  placeholder={field.placeholder}
+                />
+              ))}
+            </div>
+            <FormAction handleSubmit={handleSubmit} text="Reset Password" />
 
-        <Footer
-          paragraph="Don't have an account? "
-          linkName="Signup"
-          linkUrl="/Signup"
-        />
-      </form>
+            <Footer
+              paragraph="Don't have an account? "
+              linkName="Signup"
+              linkUrl="/Signup"
+            />
+          </form>
+        </div>
+      </div>
     </>
   );
 }
