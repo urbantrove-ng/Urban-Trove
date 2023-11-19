@@ -7,7 +7,7 @@ export default function Footer({ paragraph, linkName, linkUrl = "#" }) {
         {paragraph}{" "}
         <Link
           to={linkUrl}
-          className="font-medium text-purple-600 hover:text-purple-500"
+          className="font-medium text-green-900 hover:text-yellow-900"
         >
           {linkName}
         </Link>
