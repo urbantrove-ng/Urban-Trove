@@ -13,7 +13,9 @@ const userSchema = new Schema({
     role:{
       type:String,
       required:true
-    }
+    },
+    resetToken:String,
+    resetTokenExpires:Date
 })
 
 module.exports = model('user',userSchema)

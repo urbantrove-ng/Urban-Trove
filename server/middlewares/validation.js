@@ -26,3 +26,7 @@ exports.user =
         })
     })
     .normalizeEmail();
+exports.resetToken =
+body('resetToken')
+.notEmpty().withMessage('Invalid reset token')
+.trim()
