@@ -14,8 +14,8 @@ export default function Login() {
   };
 
   return (
-    <form className="mt-8 space-y-6">
-      <div className="-space-y-px">
+    <form className="">
+      <div>
         {fields.map((field) => (
           <Input
             key={field.id}

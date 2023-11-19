@@ -24,7 +24,7 @@ export default function Signup() {
   const createAccount = () => {};
 
   return (
-    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       {fields.map((field) => (
         <Input
           key={field.id}
