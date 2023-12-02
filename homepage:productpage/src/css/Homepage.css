@@ -1,0 +1,72 @@
+.homepage {
+  font-family: "Inter", sans-serif;
+  margin: 6rem 0;
+}
+.homepage h2 {
+  font-size: 2rem;
+  font-weight: 300;
+  color: #1f2937; 
+}
+.homepage h1 {
+  font-size: 3rem;
+  font-weight: 400;
+  color: #171717;
+}
+
+.homepage-products {
+  margin: 6rem 2rem 2rem 2rem;
+}
+.homepage-products h5 {
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: -2rem;
+  color: #4b5563;
+}
+.hp-content {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: center;
+  background-color: #eff1e6;
+  padding: 3rem 1rem;
+  border-radius: 10px;
+}
+.hp-products {
+  /* border: 1px solid green; */
+  border-radius: 10px;
+  width: 20rem;
+  height: 20rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  background-color: #fff;
+}
+.hp-products h6 {
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: #7f7f7f;
+  background-color: #eff1e6;
+}
+.hp-products button {
+  margin-top: 1rem;
+  border: none;
+  cursor: pointer;
+  background-color: #fff;
+  font-size: 1rem;
+  color: #677e11;
+}
+.hp-products button:hover .btn-arrow{
+  margin-left: 0.6rem;
+  transition: margin-left 0.3s;
+}
+
+.product-img {
+  /* border: 1px solid red; */
+  height: 15rem;
+  width: 19.98rem;
+}
+.product-img img{
+    width: 100%;
+    height: 100%;
+}
