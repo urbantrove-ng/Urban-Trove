@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <div>
       <Header />
-      <div className="homepage">
+      <div className="homepage mt-29">
         <Slider />
         <div className="homepage-products">
           <h5>Products</h5>
@@ -48,7 +48,7 @@ export default function HomePage() {
                   </div>
                   <Link to={link.url}>
                     <button>
-                      {link.text} <span className="btn-arrow">&rarr;</span>
+                      {link.text} <span className=" btn-arrow ">&rarr;</span>
                     </button>
                   </Link>
                 </div>
@@ -56,14 +56,8 @@ export default function HomePage() {
             })}
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 }
-
-// export default function Homepage() {
-//   return (
-
-//   )
-// }
