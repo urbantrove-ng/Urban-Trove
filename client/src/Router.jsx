@@ -6,6 +6,15 @@ import ForgotPage from "./pages/Auth/ForgotPage";
 import HomePage from "./pages/Layout/HomePage";
 import AboutPage from "./pages/Layout/AboutPage";
 import ContactPage from "./pages/Layout/ContactPage";
+
+// Routes from home page
+import Homepage from "./pages/Layout/HomePage";
+import Services from "./pages/Products/Services";
+import ProductDetail from "./Pages/Products/ProductDetail";
+import ServiceDetails from "./Pages/Products/ServiceDetails";
+
+import "./App.css";
+
 // import AuthContext from "./components/Account/AuthContext";
 
 export default function ProjectRoutes() {
@@ -22,6 +31,15 @@ export default function ProjectRoutes() {
     <>
       <Router>
         <Routes>
+          {/* <Header />
+          <Routes> */}
+          <Route path="/" element={<Homepage />} />
+          {/* <Route path="/products" element={<Products />} /> */}
+          <Route path="/services" element={<Services />} />
+          <Route path="/products/:details" element={<ProductDetail />} />
+          <Route path="/services/:name" element={<ServiceDetails />} />
+          {/* </Routes>
+          <Footer /> */}
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />

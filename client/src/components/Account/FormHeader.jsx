@@ -1,6 +1,6 @@
 import logo from "../../assets/image/logo.png";
 
-export default function Header({ heading }) {
+export default function FormHeader({ heading }) {
   return (
     <div className="mb-1">
       <div className="items-center justify-center">

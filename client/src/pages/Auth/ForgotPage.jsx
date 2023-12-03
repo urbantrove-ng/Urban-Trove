@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Header from "../../components/Account/FormHeader";
 import { forgotFields } from "../../constant/formFields";
 import FormAction from "../../components/Account/FormAction";
 import Input from "../../components/Account/input";
-import Footer from "../../components/Account/FormFooter";
+import FormHeader from "../../components/Account/FormHeader";
+import FormFooter from "../../components/Account/FormFooter";
 
 const fields = forgotFields;
 let fieldsState = {};
@@ -28,7 +28,7 @@ export default function forgetPass() {
     <>
       <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
-          <Header heading=" Uncover Urban Gems with Urban Trove" />
+          <FormHeader heading=" Uncover Urban Gems with Urban Trove" />
           <form onSubmit={handleSubmit}>
             <div className="-space-y-px">
               {fields.map((field) => (
@@ -48,7 +48,7 @@ export default function forgetPass() {
             </div>
             <FormAction handleSubmit={handleSubmit} text="Reset Password" />
 
-            <Footer
+            <FormFooter
               paragraph="Don't have an account? "
               linkName="Signup"
               linkUrl="/Signup"
