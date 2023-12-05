@@ -1,0 +1,252 @@
+import { useState } from "react";
+import FormAction from "../../components/Account/FormAction";
+import Footer from "../../components/Account/FormFooter";
+import Header from "../../components/Account/FormHeader";
+import Signup from "../../components/Account/SignupForm";
+import SocialLogin from "../../components/Account/SocialLogin";
+import { signupFields } from "../../constant/formFields";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/image/logo.png";
+import ErrorText from "../../components/ErrorText";
+import InputText from "../../components/InputText";
+import axios from "axios";
+
+// const fields = signupFields;
+// let fieldsState = {};
+// const navigate = useNavigate();
+// fields.forEach((field) => (fieldsState[field.id] = ""));
+
+export default function SignupPage() {
+  const INITIAL_REGISTER_OBJ = {
+    name: "",
+    password: "",
+    confirm_password: "",
+    email: "",
+  };
+
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ);
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    // setErrorMessage("");
+
+    // function handleSubmit(e) {
+    //     e.preventDefault();
+    //     console.log(signupState);
+    //     // createAccount();
+    //     axios
+    //       .post("http://localhost:8080/api/v1/auth/signup", fieldsState)
+    //       .then((response) => {
+    //         // Handle successful response
+    //         console.log(response.data);
+    //         navigate("/");
+    //       })
+
+    if (registerObj.name.trim() === "")
+      return setErrorMessage("Name is required!");
+    if (registerObj.email.trim() === "")
+      return setErrorMessage("Valid Email Address is required!");
+    if (registerObj.password.trim() === "")
+      return setErrorMessage("Password is required!");
+    if (registerObj.confirm_password.trim() === "") {
+      return setErrorMessage("Confirm Password is required! ");
+    }
+    if (registerObj.password !== registerObj.confirm_password) {
+      return setErrorMessage("Passwords do not match");
+    } else {
+      setLoading(true);
+      // Call API to check user credentials and save token in localstorage
+
+      localStorage.setItem("token", "DumyTokenHere");
+      setLoading(false);
+      axios
+        .post("http://localhost:8080/api/v1/auth/signup")
+        .then((response) => {
+          // Handle successful response
+          console.log(response.data);
+          navigate("/");
+        });
+      // window.location.href = "/";
+    }
+  };
+
+  const updateFormValue = ({ updateType, value }) => {
+    setErrorMessage("");
+    setRegisterObj({ ...registerObj, [updateType]: value });
+  };
+  // const [signupState, setSignupState] = useState(fieldsState);
+
+  // const handleChange = (e) => {
+  //   setSignupState({ ...signupState, [e.target.id]: e.target.value });
+  // };
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   console.log(signupState);
+  //   // createAccount();
+  //   axios
+  //     .post("http://localhost:8080/api/v1/auth/signup", fieldsState)
+  //     .then((response) => {
+  //       // Handle successful response
+  //       console.log(response.data);
+  //       navigate("/");
+  //     })
+  //     // .catch((err) => console.log(err));
+  //     .catch((error) => {
+  //       // Handle error response
+  //       console.error(error.response.data);
+  //     });
+  // }
+
+  return (
+    <>
+      <section className="absolute w-full h-full">
+        <div
+          className="absolute top-0 w-full h-full bg-gray-900"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80')",
+          }}
+        >
+          <span
+            id="blackOverlay"
+            className="w-full h-full absolute opacity-75 bg-black"
+          ></span>
+        </div>
+        <div className="container mx-auto px-4 h-full">
+          <div className="flex content-center items-center justify-center h-full">
+            <div className="w-[30%] lg:w-4/12 px-4">
+              <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300 border-0">
+                <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+                  <div className="text-gray-900 text-center mb-3 text-2xl font-bold">
+                    <span>Sign Up</span>
+                  </div>
+                  <form onSubmit={(e) => submitForm(e)}>
+                    {/* Username */}
+                    <div className="flex flex-col mb-3">
+                      <div className="relative">
+                        <span>Name</span>{" "}
+                        <InputText
+                          id="name"
+                          autocomplete="Name"
+                          required
+                          defaultValue={registerObj.name}
+                          updateType="name"
+                          updateFormValue={updateFormValue}
+                          className="text-sm placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full md:py-2 py-3 focus:outline-none focus:border-emerald-400"
+                          placeholder="Full Name"
+                        />{" "}
+                      </div>
+                    </div>
+
+                    {/* Email Id */}
+                    <div className="flex flex-col mb-3">
+                      <div className="relative">
+                        <span>Email Address</span>{" "}
+                        <InputText
+                          id="email"
+                          defaultValue={registerObj.email}
+                          updateType="email"
+                          updateFormValue={updateFormValue}
+                          className="text-sm placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full md:py-2 py-3 focus:outline-none focus:border-emerald-400"
+                          placeholder="Email Address"
+                          autocomplete="email"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {/* Password */}
+                    <div className="flex flex-col mb-3">
+                      <div className="relative">
+                        {/* <div className="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
+                          {" "}
+                          Pasword
+                        </div> */}
+                        <span>Password</span>{" "}
+                        <InputText
+                          id="password"
+                          defaultValue={registerObj.password}
+                          updateType="password"
+                          updateFormValue={updateFormValue}
+                          className="text-sm placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full md:py-2 py-3 focus:outline-none focus:border-emerald-400"
+                          placeholder="Password"
+                          autocomplete="password"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {/* Confirm Password */}
+                    <div className="flex flex-col mb-6">
+                      <div className="relative">
+                        <span>Confirm Password</span>{" "}
+                        <InputText
+                          id="confirm_password"
+                          defaultValue={registerObj.confirm_password}
+                          updateType="confirm_password"
+                          updateFormValue={updateFormValue}
+                          autocomplete="current-password"
+                          required
+                          className="text-sm placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full md:py-2 py-3 focus:outline-none focus:border-emerald-400"
+                          placeholder="Confrim Password"
+                        />
+                      </div>
+                      <ErrorText styleClass="mt-8">{errorMessage}</ErrorText>
+                    </div>
+
+                    {/* Button Register */}
+                    <div className="flex w-full">
+                      <button
+                        disabled={loading}
+                        type="submit"
+                        className="flex items-center justify-center hover:bg-pink-500 focus:outline-none text-white text-sm bg-emerald-500 hover:bg-emerald-700 rounded-lg md:rounded md:py-2 py-3 w-full transition duration-150 ease-in"
+                      >
+                        <span className="mr-2 md:uppercase">
+                          {loading ? "Processing...." : "Register"}
+                        </span>
+                      </button>
+                    </div>
+                  </form>
+                  <div className="flex flex-wrap mt-6">
+                    <div className="w-1/2">
+                      <Link
+                        to="/forgetpass"
+                        className="ml-2 text-sm font-semibold text-gray-700"
+                      >
+                        <small>Forgot password?</small>
+                      </Link>
+                    </div>
+                    <div className=" text-right">
+                      <Link
+                        to="/login"
+                        className=" text-sm font-semibold text-gray-700"
+                      >
+                        <small>Already Have An Account</small>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <Header />
+          <Signup />
+          <FormAction handleSubmit={handleSubmit} text="Signup" />
+
+          <SocialLogin />
+          <Footer
+            paragraph="Already have an account? "
+            linkName="Login"
+            linkUrl="/login"
+          />
+        </div>
+      </div> */}
+    </>
+  );
+}

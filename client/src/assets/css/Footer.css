@@ -1,0 +1,75 @@
+.footer {
+  padding: 4rem 15rem;
+  background-color: #09090b;
+  color: #fff;
+  font-family: "Raleway", sans-serif;
+}
+.footer h4 {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-bottom: 0.8px solid #9ca3af;
+  margin-bottom: 0.8rem;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4rem;
+}
+.bottom {
+  text-align: center;
+}
+.quick-link {
+  display: grid;
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 200;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.quick{
+    position: relative;
+}
+.quick h6 {
+  font-size: 0.9rem;
+  margin-bottom: 0.7rem;
+  color: #9ca3af;
+}
+.quick p {
+  margin-bottom: 0.5rem;
+  color: #9ca3af;
+}
+textarea {
+  background-color: #09090b;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+}
+textarea:focus {
+  outline: none;
+}
+.quick button{
+    position: absolute;
+    right: 5%;
+    bottom: 22%;
+    border: none;
+    background-color: #09090b;
+    color: #fff;
+    padding: 0.3rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.quick button:hover{
+    color: #808000;
+}
+.bottom-link {
+  text-decoration: none;
+  background-image: linear-gradient(to right,  #808000, #7e5e3f);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.bottom-link:hover,
+.quick-link:hover {
+  color: white;
+}

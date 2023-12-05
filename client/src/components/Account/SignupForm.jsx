@@ -2,6 +2,7 @@ import { useState } from "react";
 import { signupFields } from "../../constant/formFields";
 import FormAction from "./FormAction";
 import Input from "./input";
+import axios from "axios";
 
 const fields = signupFields;
 let fieldsState = {};
@@ -21,7 +22,19 @@ export default function Signup() {
   };
 
   //handle Signup API Integration here
-  const createAccount = () => {};
+  const createAccount = () => {
+    axios
+      .post("http://localhost:8080/api/v1/auth/signup", fields)
+      .then((result) => {
+        if (result.data.loginStatus) {
+          localStorage.setItem("valid", true);
+          navigate("/dashboard");
+        } else {
+          setError(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <form onSubmit={handleSubmit}>
