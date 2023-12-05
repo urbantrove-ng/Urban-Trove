@@ -13,6 +13,9 @@ exports.auth = (req,res,next)=>{
 }
 exports.googleOauth = (req,res,next)=>{
     passport.authenticate("google",(err,user,info)=>{
+        if(err){
+            return res.status(400).json({success:false,body:{status:400,title:'Authentication Error',data:[{path:'email',msg:err.msg,value:null,location:'oauth',type:'google-oauth'}]}}) 
+        }
         if(!user){
             return res.status(400).json({success:false,body:{status:400,title:'Authentication Error',data:[{path:'email',msg:"Google Oauth was unsuccessful",value:null,location:'oauth',type:'google-oauth'}]}})    
         }

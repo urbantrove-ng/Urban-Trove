@@ -27,13 +27,17 @@ passport.use(new JwtStrategy(opts,function(jwt_payload,done){
 passport.use(new GoogleStrategy({
     clientID:google_client_id,
     clientSecret:google_client_secret,
-    callbackURL:`${server}/api/v1/auth/google/callback`
+    callbackURL:`${allowedOrigin}/auth/google/callback`
 },async function(accessToken,refreshToken,profile,cb){
  try {
-    const user = await User.findOne({googleId:profile.id})
-    if (user){
-     return cb(null,user)
-    }else{
+     const user = await User.findOne({googleId:profile.id})
+     if (user){
+         return cb(null,user)
+        }
+        const registeredUserWithEmail = await User.findOne({email:profile.emails[0].value})
+       if(registeredUserWithEmail){
+        return cb({msg:"User already exists with this email"},null)
+       }else{
     const createdUser = await User.create({
         email:profile.emails[0].value,
         username:profile.displayname,
