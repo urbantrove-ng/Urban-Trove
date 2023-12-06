@@ -27,5 +27,11 @@ router
 router
 .route('/twitter/callback')
 .post(auth.twitterOauth)
+router
+.route('/facebook')
+.get(passport.authenticate('facebook'))
+router
+.route('/facebook/callback')
+.post(auth.facebookOauth)
 
 module.exports = router
