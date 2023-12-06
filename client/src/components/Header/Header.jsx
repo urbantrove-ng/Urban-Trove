@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./assets/css/Header.css";
+// import "./assets/css/Header.css";
+import "../../assets/css/header.css";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { RxPerson } from "react-icons/rx";
 import { BsSearch } from "react-icons/bs";
@@ -12,7 +13,7 @@ import { BsPatchQuestion } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { BsQuestionCircle } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "./assets/image/logo.png";
+import Logo from "../../assets/image/logo.png";
 import { NavLink } from "react-router-dom";
 
 export default function Header() {
@@ -28,7 +29,7 @@ export default function Header() {
   }
 
   function signIn() {
-    navigate("/signIn");
+    navigate("/Login");
   }
 
   function home() {

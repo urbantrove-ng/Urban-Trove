@@ -6,7 +6,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import Slider from "./Slider";
 import Footer from "../../Footer";
-import Header from "../../Header";
+import Header from "../../components/Header/Header";
 
 export default function HomePage() {
   return (
