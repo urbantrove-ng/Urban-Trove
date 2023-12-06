@@ -3,6 +3,7 @@ const {Schema,model} = require('mongoose')
 const userSchema = new Schema({
     username:String,
     googleId:Number,
+    twitterId:Number,
     email:{
         type:String,
         required:true

@@ -10,7 +10,9 @@ const helmet = require('helmet')
 const logger = require('morgan')
 const rateLimit = require('express-rate-limit')
 const cors = require ('cors');
-const { allowedOrigin } = require('./config');
+const { allowedOrigin,session_secret,database_uri } = require('./config');
+const session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session)
 
 const app = express();
 const limiter = rateLimit({
@@ -18,6 +20,10 @@ const limiter = rateLimit({
     limit:10,
     standardHeaders:'draft-7',
     legacyHeaders:false
+})
+const store = new MongoDBStore({
+    uri:database_uri,
+    collection:'sessions'
 })
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -29,6 +35,12 @@ app.use(helmet())
 app.use(logger('dev'))
 app.use(cors({origin:allowedOrigin,
 optionsSuccessStatus:200}))
+app.use(session({
+    resave:false,
+    saveUninitialized:false,
+    secret:session_secret,
+    store:store
+}))
 
 app.use('/api/v1',rootRoutes);
 app.use('/api/v1/auth',authRoutes);

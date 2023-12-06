@@ -20,5 +20,12 @@ router
 .get(passport.authenticate('google',{scope:['profile','email']}))
 router
 .route('/google/callback')
-.get(auth.googleOauth)
+.post(auth.googleOauth)
+router
+.route('/twitter')
+.get(passport.authenticate('twitter',{scope:['profile']}))
+router
+.route('/twitter/callback')
+.post(auth.twitterOauth)
+
 module.exports = router

@@ -12,5 +12,8 @@ module.exports ={
     process.env.LOCAL_SERVER:
     process.env.REMOTE_REMOTE,
     google_client_id:process.env.GOOGLE_CLIENT_ID,
-    google_client_secret:process.env.GOOGLE_CLIENT_SECRET
+    google_client_secret:process.env.GOOGLE_CLIENT_SECRET,
+    twitter_client_key:process.env.TWITTER_CLIENT_KEY,
+    twitter_client_secret:process.env.TWITTER_CLIENT_SECRET,
+    session_secret:process.env.SESSION_SECRET
 }
