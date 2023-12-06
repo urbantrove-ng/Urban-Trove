@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import "./assets/css/Header.css";
-import "../../assets/css/header.css";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { RxPerson } from "react-icons/rx";
 import { BsSearch } from "react-icons/bs";
@@ -14,7 +12,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { BsQuestionCircle } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/image/logo.png";
-import { NavLink } from "react-router-dom";
+
 
 export default function Header() {
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ export default function Header() {
   }
 
   function signIn() {
-    navigate("/Login");
+    navigate("/signIn");
   }
 
   function home() {
@@ -53,53 +51,70 @@ export default function Header() {
 
   function logoutUser() {}
   return (
-    <div className="header">
-      <nav>
-        <div className="nav-start">
-          <div className="logo-img">
-            <img src={Logo} alt="Logo" />
+    <div>
+      <nav className="fixed top-0 z-50 w-full px-24 flex justify-between items-center font-ubuntu shadow-md bg-white">
+        <div className="flex justify-center items-center gap-1/12 text-20 font-semibold">
+          <div className="h-24 w-32 py-[0.8rem]">
+            <img src={Logo} className="w-full h-full object-cover" alt="Logo" />
           </div>
-          <h1 onClick={home}>Urban Trove</h1>
+          <h1 className="cursor-pointer text-3xl" onClick={home}>
+            Urban Trove
+          </h1>
         </div>
 
         <div className="search">
-          <input type="text" placeholder="Search Products and Services" />
-          <button className="search-icon">
+          <input
+            type="text"
+            className="border-[0.5px] border-black outline-none font-sans px-3 py-1 text-[18px] placeholder:text-[#6b7280] h-11 mr-[-2rem] rounded-full w-[28rem] transition-all duration-200 focus:outline-none focus:w-[35rem] bg-[#f3f4f6] text-base"
+            placeholder="Search Products and Services"
+          />
+          <button className="mr-4 bg-[#f3f4f6] border-none cursor-pointer">
             <BsSearch />
           </button>
         </div>
 
-        <div className="nav-end">
-          <div className="account-somn">
+        <div className="flex gap-14">
+          <div className=" group relative">
             <div
-              className="dropdown"
+              className="absolute hidden z-10 left-[-6rem] top-6 rounded-bl-[5px] rounded-br-[5px] py-[1rem] px-[2rem] group-hover:block bg-white group"
               onMouseEnter={handleMouseEnterAccount}
               onMouseLeave={handleMouseLeaveAccount}
             >
               {isSignedIn ? (
                 <div className="dropdown-content">
-                  <button onClick={signIn}>Sign In</button>
-                  <div className="dropdown-dets first" onClick={signIn}>
-                    <RxPerson />
+                  <button
+                    className="py-[0.5rem] hover:shadow-2xl active:shadow-3xl px-[2rem] bg-primaryTwo mt-[1rem] mb-[0.4rem] w-[12rem] h-[2.5rem] text-white border-0 rounded-[5px] uppercase"
+                    onClick={signIn}
+                  >
+                    Sign In
+                  </button>
+                  <div
+                    className="flex text-left gap-[0.5rem] text-[16px] cursor-pointer hover:bg-[#d6d3d1] font-[400] py-[0.5rem] px-[1rem] mt-[10px]"
+                    onClick={signIn}
+                  >
+                    <RxPerson className="mt-[2px] text-[18px]" />
                     <p>My Account</p>
                   </div>
-                  <div className="dropdown-dets" onClick={signIn}>
-                    <RiFileList2Line />
+                  <div
+                    className="flex text-left gap-[0.5rem] text-[16px] cursor-pointer hover:bg-[#d6d3d1] font-[400] py-[0.5rem] px-[1rem]"
+                    onClick={signIn}
+                  >
+                    <RiFileList2Line className="mt-[3px] text-[18px]" />
                     <p>Orders</p>
                   </div>
                 </div>
               ) : (
                 <div className="dropdown-content">
-                  <div className="dropdown-dets">
-                    <MdPerson />
+                  <div className="flex text-left gap-[0.5rem] text-[16px] cursor-pointer hover:bg-[#d6d3d1] font-[400] py-[0.5rem] px-[1rem]">
+                    <MdPerson className="mt-[2px] text-[18px]" />
                     <p>My Account</p>
                   </div>
-                  <div className="dropdown-dets">
-                    <RiFileList2Fill />
+                  <div className="flex text-left gap-[0.5rem] text-[16px] cursor-pointer hover:bg-[#d6d3d1] font-[400] py-[0.5rem] px-[1rem]">
+                    <RiFileList2Fill className="mt-[2px] text-[18px]" />
                     <p>My Orders</p>
                   </div>
-                  <div className="dropdown-dets">
-                    <FaLocationDot />
+                  <div className="flex text-left gap-[0.5rem] text-[16px] cursor-pointer hover:bg-[#d6d3d1] font-[400] py-[0.5rem] px-[1rem]">
+                    <FaLocationDot className="mt-[2px] text-[18px]" />
                     <p>Delivery Address</p>
                   </div>
                   <button onClick={logoutUser}>Log Out</button>
@@ -108,7 +123,7 @@ export default function Header() {
             </div>
             {isSignedIn ? (
               <button
-                className="btn-account"
+                className="flex items-center justify-center gap-[5px] text-[19px] font-[500] bg-white border-0 ml-[-2rem] cursor-pointer hover:text-primaryOne group-hover:text-primaryOne"
                 onMouseEnter={() => setIsHoveredAccount(true)}
                 onMouseLeave={() => setIsHoveredAccount(false)}
               >
@@ -124,33 +139,33 @@ export default function Header() {
             )}
           </div>
 
-          <div className="help-somn">
+          <div className="group relative">
             <div
-              className="dropdown"
+              className="absolute hidden z-10 left-[-6rem] top-6 rounded-bl-[5px] rounded-br-[5px] py-[1rem] px-[2rem] group-hover:block bg-white group w-[17rem]"
               onMouseEnter={handleMouseEnterHelp}
               onMouseLeave={handleMouseLeaveHelp}
             >
               <div className="dropdown-content">
-                <div className="dropdown-dets">
-                  <TfiHeadphoneAlt />
+                <div className="flex text-left gap-[0.5rem] text-[16px] cursor-pointer hover:bg-[#d6d3d1] font-[400] py-[0.5rem] px-[1rem]">
+                  <TfiHeadphoneAlt className="mt-[2px] text-[18px]" />
                   <p>Help Center</p>
                 </div>
-                <div className="dropdown-dets">
-                  <MdPayment />
+                <div className="flex text-left gap-[0.5rem] text-[16px] cursor-pointer hover:bg-[#d6d3d1] font-[400] py-[0.5rem] px-[1rem]">
+                  <MdPayment className="mt-[2px] text-[18px]" />
                   <p>Payment Methods</p>
                 </div>
-                <div className="dropdown-dets">
-                  <BsPatchQuestion />
+                <div className="flex text-left gap-[0.5rem] text-[16px] cursor-pointer hover:bg-[#d6d3d1] font-[400] py-[0.5rem] px-[1rem]">
+                  <BsPatchQuestion className="mt-[2px] text-[18px]" />
                   <p>FAQS</p>
                 </div>
-                <div className="dropdown-dets">
-                  <MdOutlinePhoneInTalk />
+                <div className="flex text-left gap-[0.5rem] text-[16px] cursor-pointer hover:bg-[#d6d3d1] font-[400] py-[0.5rem] px-[1rem]">
+                  <MdOutlinePhoneInTalk className="mt-[2px] text-[18px]" />
                   <p>Contact Us</p>
                 </div>
               </div>
             </div>
             <button
-              className="btn-account"
+              className="flex items-center justify-center gap-[5px] text-[19px] font-[500] bg-white border-0 ml-[-2rem] cursor-pointer hover:text-primaryOne group-hover:text-primaryOne"
               onMouseEnter={() => setIsHoveredHelp(true)}
               onMouseLeave={() => setIsHoveredHelp(false)}
             >
@@ -160,12 +175,17 @@ export default function Header() {
             </button>
           </div>
 
-          <div className="carty">
-            <button className="btn" onClick={cart}>
+          <div className="relative ml-[-1.5rem]">
+            <button
+              className="flex items-center justify-center gap-[5px] text-[19px] font-[500] cursor-pointer border-0 bg-white hover:text-primaryOne"
+              onClick={cart}
+            >
               <AiOutlineShoppingCart />
               Cart
             </button>
-            {/* <span>7</span> */}
+            <span className="bg-primaryTwo py-[0.1rem] px-[0.05] text-[10px] w-[14px] h-[14px] rounded-[50px] absolute bottom-4 left-2 text-white flex justify-center items-center">
+              0
+            </span>
           </div>
         </div>
       </nav>
