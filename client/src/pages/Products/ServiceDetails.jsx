@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "../../assets/css/ServiceDetails.css";
-import servicesData from "../../data/ServiceData";
+import {servicesData} from "../../data/ServiceData";
 import { TfiLocationPin } from "react-icons/tfi";
 import { BsTelephoneForward } from "react-icons/bs";
 import { IoIosLaptop } from "react-icons/io";
@@ -64,6 +63,7 @@ export default function ServiceDetails() {
   //   setShowMoreClicked(true)
   // }, [showMoreClicked])
 
+
   //Keydown Events
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -97,27 +97,27 @@ export default function ServiceDetails() {
   } = service;
 
   return (
-    <div className="servicedetail">
-      <div className="servicedetail-top">
-        <div className="servicedetail-img">
-          <img src={image} alt="" />
+    <div className="mt-[7rem] mx-[1rem] py-[2rem] px-[3rem]">
+      <div className="servicedetail-top"> 
+        <div className="h-[20rem]">
+          <img className="w-full h-full object-cover rounded-[10px]" src={image} alt="" />
         </div>
-        <h2>{name}</h2>
-        <div className="servicedetail-info">
-          <h5>
-            <TfiLocationPin />
+        <h2 className="mt-[1rem] text-[2rem] font-[500]">{name}</h2>
+        <div className="flex items-center ml-[-1.1rem]">
+          <h5 className="flex gap-[0.3rem] px-[1rem] font-[400] border-r-[0.5px] border-black">
+            <TfiLocationPin className="mt-[0.2rem]"/>
             {address}
           </h5>
-          <h5>
-            <BsTelephoneForward /> {phoneNumber}
+          <h5 className="flex gap-[0.5rem] px-[1rem] font-[400] border-r-[0.5px] border-black">
+            <BsTelephoneForward className=" mt-[0.2rem]"/> {phoneNumber}
           </h5>
-          <h5>
-            <FaLaptop /> {website ? website : "Website not available"}
+          <h5 className="flex gap-[0.5rem] px-[1rem] font-[400]">
+            <FaLaptop className="mt-[0.3rem]"/> {website ? website : "Website not available"}
           </h5>
         </div>
-        <h4>About us</h4>
-        <p>{about}</p>
-        <p>
+        <h4 className="text-[2rem] mt-[8rem] font-[400] text-[#1e293b]">About us</h4>
+        <p className="font-roboto py-[0.4rem] leading-[1.7rem] text-[1.2rem] text-[#1e293b]">{about}</p>
+        <p className="font-roboto py-[0.4rem] leading-[1.7rem] text-[1.2rem] text-[#1e293b]">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo
           laudantium porro necessitatibus tempora commodi sunt accusantium
           aperiam, laborum magnam fugiat explicabo enim ratione maiores omnis
@@ -125,70 +125,65 @@ export default function ServiceDetails() {
         </p>
       </div>
 
-      <div className="servicedetail-bottom">
+      <div className="flex flex-col justify-center items-center m-[3rem]">
         <div className="servicedetail-pricelist">
-          <h4>{category !== "restaurant" ? "Price List" : "Our Menu"}</h4>
-          <div className="pricelist-img">
-            <img src={pricelist} alt="" />
+          <h4 className="text-[2rem] font-[400] text-[#1e293b] border-b-[0.5px] border-black text-center">{category !== "restaurant" ? "Price List" : "Our Menu"}</h4>
+          <div className="mt-[2.5rem] h-[25rem] w-[20rem] flex gap-[3rem] flex-wrap">
+            <img className="w-full h-full rounded-[10px]" src={pricelist} alt="" />
           </div>
         </div>
 
-        <div className="servicedetail-images">
-          <h4>{category !== "restaurant" ? "Gallery" : "Our Food"}</h4>
+        <div className="m-[10rem] relative">
+          <h4 className="text-[2rem] font-[400] text-[#1e293b] text-center">{category !== "restaurant" ? "Gallery" : "Our Food"}</h4>
 
-          <div className="servicedetail-content">
-            <div className="gallery-images">
+          <div className="mt-[1rem] h-[20rem] w-[80rem]">
+            <div className="flex gap-[2px] relative overflow-hidden">
               {firstSixImages.map((image, index) => (
                 <div
                   key={index}
-                  className="image-container"
+                  className="relative w-[20rem] h-[20rem] overflow-hidden"
                   onClick={() => {
                     if (!showMoreClicked) {
                       handleOpenModal(index);
                     }
                   }}
                 >
-                  <img src={image} alt={`Sample Image ${index + 1}`} />
-                  {index === 3 && (
+                  <img className="h-full w-full object-cover cursor-pointer transition duration-200 hover:scale-[1.03]" src={image} alt={`Sample Image ${index + 1}`} />
+                  {index === 3 && ( 
                     <button
-                      className="show-more-button"
-                      onClick={() => {
-                        setShowMoreClicked(true);
-                        openAllImagesModal();
-                      }}
-                    >
-                      Show More
-                    </button>
+                    className="absolute bottom-0 left-0 w-full bg-black p-[5px] border-0 cursor-pointer text-white"
+                    onClick={() => {
+                      setShowMoreClicked(true);
+                      openAllImagesModal();
+                    }}
+                  >
+                    Show More
+                  </button>
                   )}
                 </div>
               ))}
 
               {/* Modal for all Images */}
               {showAllImagesModal && !showModal && (
-                <div className="all-images-modal">
-                  <span className="modal-close" onClick={closeAllImagesModal}>
+                <div className="fixed top-0 left-0 right-0 z-[400] bg-white flex items-center justify-center w-full h-full">
+                  <span className="absolute top-[5%] right-[3%] cursor-pointer" onClick={closeAllImagesModal}>
                     <FaTimes />
                   </span>
-                  <div className="modal-content">
+                  <div className="grid grid-cols-5 gap-[1rem] mb-[15rem]">
                     {service.sampleimages.map((image, index) => (
-                      <img
-                        key={index}
-                        src={image}
-                        onClick={() => openFullScreenModal(index)}
-                        alt={`Image ${index + 1}`}
-                      />
+                      <img className="rounded-[10px] w-[15rem] h-[15rem] cursor-pointer object-cover" key={index} src={image} onClick={() => openFullScreenModal(index)} alt={`Image ${index + 1}`} />
                     ))}
                   </div>
                 </div>
               )}
               {/* Modal for individual Images */}
               {showModal && (
-                <div className="sliderWrap">
-                  <IoIosArrowForward className="btnNext" onClick={nextSlide} />
-                  <IoIosArrowBack className="btnPrev" onClick={prevSlide} />
-                  <FaTimes className="btnClose" onClick={closeModal} />
-                  <div className="fullScreenImage" onClick={handleOpenModal}>
-                    <img src={sampleimages[slideNumber]} alt="" />
+                <div className="fixed top-0 bottom-0 left-0 right-0 z-50 bg-[rgba(0,0,0,0.8)] flex items-center justify-center w-full h-full">
+                  <IoIosArrowForward className="fixed cursor-pointer opacity-60 text-white z-[200] text-[1.5rem] hover:opacity-100 top-[50%] translate-y-[-50%] right-[40px]" onClick={nextSlide} />
+                  <IoIosArrowBack className="fixed cursor-pointer opacity-60 text-white z-[200] text-[1.5rem] hover:opacity-100 top-[50%] translate-y-[-50%] left-[40px]" onClick={prevSlide} />
+                  <FaTimes className="fixed cursor-pointer opacity-60 text-white z-[200] text-[1.5rem] hover:opacity-100 top-[40px] right-[40px]" onClick={closeModal} />
+                  <div className="flex items-center justify-center h-[100vh] w-[100vw]" onClick={handleOpenModal}>
+                    <img className="max-w-full max-h-full object-contain cursor-pointer transition duration-200" src={sampleimages[slideNumber]} alt="" />
                   </div>
                 </div>
               )}

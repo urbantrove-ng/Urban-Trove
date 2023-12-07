@@ -10,7 +10,7 @@ import sunglass from "../assets/image/sunglass.webp";
 const productData = [
   {
     id: 1,
-    mainImage: handbag,
+    mainImage: handbag, 
     otherImage1: handbag,
     otherImage2: handbag,
     header: "Bags",
@@ -175,5 +175,6 @@ const productData = [
       "Ray-Bans Meta Smart Glasses, Lorem ipsum dolor sit amet consectetur adipisicing elit. Non fugitquod expedita maxime, quidem minus et? Expedita temporibus porrodolore deleniti exercitationem rem? Necessitatibus aspernaturtemporibus, repudiandae dolore pariatur ad. ",
   },
 ];
+const ProductMiniheader = ['Clothing', 'Shoes', 'Accessories', 'Bags', 'Skincare Products', 'Gadgets'];
 
-export default productData;
+export { productData, ProductMiniheader };

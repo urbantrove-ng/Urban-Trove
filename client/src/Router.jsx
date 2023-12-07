@@ -6,9 +6,12 @@ import ForgotPage from "./pages/Auth/ForgotPage";
 import HomePage from "./pages/Layout/HomePage";
 import AboutPage from "./pages/Layout/AboutPage";
 import ContactPage from "./pages/Layout/ContactPage";
+import Header from "./components/Header/Header";
+import Footer from "./Footer";
 
 // Routes from home page
 import Homepage from "./pages/Layout/HomePage";
+import Products from "./pages/Products/Products";
 import Services from "./pages/Products/Services";
 import ProductDetail from "./Pages/Products/ProductDetail";
 import ServiceDetails from "./Pages/Products/ServiceDetails";
@@ -30,16 +33,16 @@ export default function ProjectRoutes() {
   return (
     <>
       <Router>
+        <Header />
         <Routes>
-          {/* <Header />
-          <Routes> */}
+          {/* <Routes>  */}
           <Route path="/" element={<Homepage />} />
           {/* <Route path="/products" element={<Products />} /> */}
           <Route path="/services" element={<Services />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/products/:details" element={<ProductDetail />} />
           <Route path="/services/:name" element={<ServiceDetails />} />
-          {/* </Routes>
-          <Footer /> */}
+          {/* </Routes> */}
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
@@ -47,6 +50,7 @@ export default function ProjectRoutes() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgotpass" element={<ForgotPage />} />
         </Routes>
+        <Footer />
       </Router>
     </>
   );
