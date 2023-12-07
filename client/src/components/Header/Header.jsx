@@ -13,7 +13,6 @@ import { BsQuestionCircle } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/image/logo.png";
 
-
 export default function Header() {
   const navigate = useNavigate();
   const [isSignedIn, setIsSignedIn] = useState(true);
@@ -27,7 +26,7 @@ export default function Header() {
   }
 
   function signIn() {
-    navigate("/signIn");
+    navigate("/login");
   }
 
   function home() {
