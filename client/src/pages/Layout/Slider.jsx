@@ -33,9 +33,9 @@ export default function Slider() {
     };
   }, [currentSlide]);
   return (
-    <div className="relative ">
+    <div className="relative sm:mt-[-1rem] md:mt-[6.5rem]">
       {sliderData.map((slides, index) => {
-        const { image, caption } = slides; 
+        const { image, caption } = slides;
         return (
           <div
             key={slides.id}
@@ -43,14 +43,22 @@ export default function Slider() {
           >
             {index === currentSlide && (
               <div className="relative">
-                <div className="h-[30rem] relative">
-                  <img src={image} className="w-full h-full object-cover" alt="Slide" />
+                <div className="h-[30rem] sm:h-[20rem] relative">
+                  <img
+                    src={image}
+                    className="w-full h-full object-cover"
+                    alt="Slide"
+                  />
                   <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[rgba(126,94,63,0.2)] to-[rgba(128,128,0,0.2)]"></div>
                 </div>
                 <div className="absolute top-0 bg-[rgba(126,94,63,0.3)] rounded-[10px]">
                   {/* <h2 className="text-[#d4d4d8] text-start text-[2rem] font-[700] py-[0.3rem] px-[1rem]">{caption.subheading}</h2> */}
-                  <h1 className="text-[#d4d4d8] text-start text-[3rem] font-[700] px-[1rem]">{caption.heading}</h1>
-                  <h1 className="text-[#d4d4d8] text-start text-[3rem] font-[700] px-[1rem]">{caption.break}</h1>
+                  <h1 className="text-[#d4d4d8] text-start text-[3rem] sm:text-[2rem] font-[700] px-[1rem]">
+                    {caption.heading}
+                  </h1>
+                  <h1 className="text-[#d4d4d8] text-start text-[3rem] sm:text-[2rem] font-[700] px-[1rem]">
+                    {caption.break}
+                  </h1>
                 </div>
               </div>
             )}
@@ -61,7 +69,9 @@ export default function Slider() {
         {sliderData.map((_, index) => (
           <div
             key={index}
-            className= {`w-[10px] h-[10px] rounded-[50%] mx-[5px] bg-[#ccc] cursor-pointer ${index === currentSlide ? 'bg-primaryOne' : ''}`}
+            className={`w-[10px] h-[10px] rounded-[50%] mx-[5px] bg-[#ccc] cursor-pointer ${
+              index === currentSlide ? "bg-primaryOne" : ""
+            }`}
             onClick={() => setCurrentSlide(index)}
           />
         ))}
