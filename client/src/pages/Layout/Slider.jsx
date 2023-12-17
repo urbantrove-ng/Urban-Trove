@@ -43,7 +43,7 @@ export default function Slider() {
           >
             {index === currentSlide && (
               <div className="relative">
-                <div className="h-[30rem] sm:h-[20rem] relative">
+                <div className="h-[30rem] xl:h-[25rem] sm:h-[20rem] relative">
                   <img
                     src={image}
                     className="w-full h-full object-cover"

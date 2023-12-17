@@ -13,8 +13,8 @@ export default function MiniProductsHeader() {
   return (
     <div className="relative">
       <div
-        className={`bg-[#d1d5db] z-20 sm:rounded-br-[5px] mt-[8.7rem] md:mt-[9.5rem] sm:fixed sm:top-[1rem] group sm:mt-[9rem] sm:w-[10rem] flex sm:flex-col sm:gap-[1rem] sm:pl-[2rem] justify-center gap-[5rem] md:gap-[4rem] transition-all duration-500 ${
-          openSidebar ? "sm:left-0" : "sm:left-[-11rem]"
+        className={`bg-[#d1d5db] z-20 1sm:rounded-br-[5px] mt-[8.7rem] md:mt-[9.5rem] 1sm:fixed sm:top-[1rem] 1sm:top-[2rem] group sm:mt-[9rem] 1sm:w-[10rem] flex 1sm:flex-col 1sm:gap-[1rem] 1sm:pl-[2rem] justify-center gap-[5rem] md:gap-[4rem] transition-all duration-500 ${
+          openSidebar ? "1sm:left-0" : "1sm:left-[-11rem]"
         }`}
       >
         {ProductMiniheader.map((header, index) => {
@@ -31,7 +31,7 @@ export default function MiniProductsHeader() {
         })}
       </div>
       <div
-        className="sm:mt-[7rem] pl-[2rem] z-30 py-[0.5rem] rounded-br-[5px] sm:block cursor-pointer bg-[#d1d5db] w-[10rem] 2xl:hidden fixed top-[0.8rem]"
+        className="sm:mt-[7rem] 1sm:mt-[8.5rem] pl-[2rem] z-30 py-[0.5rem] rounded-br-[5px] 1sm:block cursor-pointer bg-[#d1d5db] w-[10rem] 2xl:hidden fixed top-[0.8rem]"
         onClick={openBurger}
       >
         <h3 className="flex items-center gap-[0.6rem] uppercase">

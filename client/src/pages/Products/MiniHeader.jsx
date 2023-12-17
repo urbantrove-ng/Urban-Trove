@@ -11,6 +11,7 @@ export default function MiniHeader() {
             : "no-underline font-ubuntu text-[1.3rem] text-black"
         }
         to="/products"
+        end
       >
         Products
       </NavLink>

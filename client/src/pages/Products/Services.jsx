@@ -14,7 +14,7 @@ export default function Services() {
     <>
       <MiniHeader />
       <MiniServicesHeader />
-      <div className="my-[2rem] md:my-[0.5rem] mx-[1rem] sm:mx-[0.2rem] md:mx-[0.5rem] sm:mt-[10.5rem] bg-[#e5e5e5] p-[2rem] sm:p-[0.9rem] md:p-[0.7rem] grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-[1rem] sm:gap-[0.6rem] justify-center font-roboto">
+      <div className="my-[2rem] md:my-[0.5rem] mx-[1rem] sm:mx-[0.2rem] md:mx-[0.4rem] 1sm:mt-[12rem] sm:mt-[10.5rem] bg-[#e5e5e5] p-[2rem] sm:p-[0.9rem] md:p-[0.5rem] grid grid-cols-4 1sm:grid-cols-2 md:grid-cols-3 gap-[1rem] sm:gap-[0.6rem] justify-center font-roboto">
         {servicesData.map((service) => {
           const { image, startingPrice, services, name } = service;
 

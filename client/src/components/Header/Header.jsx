@@ -55,8 +55,8 @@ export default function Header() {
 
   function logoutUser() {}
   return (
-    <div>
-      <nav className="fixed top-0 z-50 w-full px-[6rem] xl:px-[3rem] sm:px-[1.3rem] flex sm:flex-wrap md:flex-wrap justify-between sm:gap-0 items-center font-ubuntu shadow-md bg-white">
+    <div> 
+      <nav className="fixed top-0 z-50 w-full px-[6rem] 1lg:px-[0.5rem] lg:px-[0.4rem] md:px-[1rem] xl:px-[3rem] sm:px-[1.3rem] flex sm:flex-wrap md:flex-wrap justify-between sm:gap-0 items-center font-ubuntu shadow-md bg-white">
         <div className="flex justify-center items-center gap-[0.3rem] sm:gap-0 text-20 font-semibold">
           <div className="h-24 sm:h-[3rem] md:h-[5rem] w-32 sm:w-[3rem] md:w-[5rem] py-[0.8rem]">
             <img src={Logo} className="w-full h-full object-cover" alt="Logo" />
@@ -69,7 +69,7 @@ export default function Header() {
         <div className="sm:order-1 md:order-1 sm:flex sm:mt-[-0.6rem] md:mt-[-1.5rem] md:flex sm:flex-grow-0 md:justify-center md:flex-grow-0 sm:flex-shrink-0 md:flex-shrink-0 sm:w-full md:w-full sm:mb-[0.5rem] md:mb-[0.5rem]">
           <input
             type="text"
-            className="border-[0.5px] border-black outline-none font-sans px-3 py-1 text-[18px] sm:text-[10px] placeholder:text-[#6b7280] h-11 sm:h-[2.1rem] mr-[-2rem] rounded-full w-[28rem]  transition-all duration-200 focus:outline-none focus:w-[35rem] bg-[#f3f4f6] text-base"
+            className="border-[0.5px] border-black outline-none font-sans px-3 py-1 text-[3rem] sm:text-[0.9rem] placeholder:text-[#6b7280] h-11 sm:h-[2.1rem] mr-[-2rem] rounded-full w-[28rem] 1lg:w-[20rem]  transition-all duration-200 focus:outline-none focus:w-[35rem] 1lg:focus:w-[20rem] bg-[#f3f4f6] text-base"
             placeholder="Search Products and Services"
           />
           <button className="mr-4 bg-[#f3f4f6] border-none cursor-pointer sm:bg-transparent md:bg-transparent">
@@ -127,11 +127,11 @@ export default function Header() {
             </div>
             {isSignedIn ? (
               <button
-                className="flex items-center z-50 justify-center gap-[5px] sm:gap-0 text-[19px] font-[500] bg-white border-0 ml-[-2rem] cursor-pointer hover:text-primaryOne group-hover:text-primaryOne"
+                className="flex items-center z-50 justify-center gap-[5px] sm:gap-0 text-[19px] font-[500] bg-transparent border-0 ml-[-2rem] cursor-pointer hover:text-primaryOne group-hover:text-primaryOne"
                 onMouseEnter={() => setIsHoveredAccount(true)}
                 onMouseLeave={() => setIsHoveredAccount(false)}
               >
-                <RxPerson />
+                <RxPerson className="lg:hidden md:block"/>
                 <span className="sm:hidden">Account</span>
                 {isHoveredAccount ? <IoIosArrowUp className="sm:hidden"/> : <IoIosArrowDown className="sm:hidden"/>}
               </button>
@@ -147,7 +147,7 @@ export default function Header() {
             <div
               className={`absolute hidden z-10 left-[-6rem] sm:left-[-12rem] top-6 sm:top-5 rounded-bl-[5px] rounded-br-[5px] group-hover:block py-[1rem] px-[2rem] bg-white group w-[17rem]`}
               onMouseEnter={handleMouseEnterHelp}
-              onMouseLeave={handleMouseLeaveHelp}
+              onMouseLeave={handleMouseLeaveHelp} 
             >
               <div className="dropdown-content">
                 <div className="flex text-left gap-[0.5rem] text-[16px] cursor-pointer hover:bg-[#d6d3d1] font-[400] py-[0.5rem] px-[1rem]">
@@ -174,7 +174,7 @@ export default function Header() {
               onMouseLeave={() => setIsHoveredHelp(false)}
               onClick={toggleDropdown}
             >
-              <BsQuestionCircle />
+              <BsQuestionCircle className="lg:hidden md:block"/>
               <span className="sm:hidden">Help</span>
               {isHoveredHelp ? <IoIosArrowUp className="sm:hidden" /> : <IoIosArrowDown className="sm:hidden"/>}
             </button>

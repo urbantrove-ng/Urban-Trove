@@ -93,7 +93,7 @@ export default function ServiceDetails() {
     about,
     sampleimages,
     pricelist,
-  } = service; 
+  } = service;
 
   return (
     <div className="mt-[7rem] md:mt-[6rem] sm:mt-[4.2rem] mx-[1rem] py-[2rem] px-[3rem] sm:px-0">
