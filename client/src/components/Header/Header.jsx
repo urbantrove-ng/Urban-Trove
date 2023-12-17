@@ -31,7 +31,7 @@ export default function Header() {
   }
 
   function signIn() {
-    navigate("/signIn");
+    navigate("/login");
   }
 
   function home() {
