@@ -5,6 +5,7 @@ const path = require('path');
 const rootRoutes = require('./routes/index');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin')
 const compression = require('compression')
 const helmet = require('helmet')
 const logger = require('morgan')
@@ -45,5 +46,6 @@ app.use(session({
 app.use('/api/v1',rootRoutes);
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/user',userRoutes);
+app.use('/api/v1/admin',adminRoutes)
 
 module.exports = app;
