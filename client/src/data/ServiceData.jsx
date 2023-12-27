@@ -53,7 +53,7 @@ const servicesData = [
     category: "restaurant",
     image: restaurant,
     header: "Restaurants",
-    name: "Urban Trove Dining",
+    name: "Urban Trove Dining", 
     startingPrice: 2000,
     services: "International, African and Fast Food Dishes.",
     address:
@@ -165,5 +165,7 @@ const servicesData = [
     },
   },
 ];
+const ServiceMiniheader = ['Restaurants', 'Salons', 'Spas'];
 
-export default servicesData;
+
+export {servicesData, ServiceMiniheader};
