@@ -30,13 +30,12 @@ exports.addNewCategory = (req,res,next)=>{
         return res.status(422).json({success:false,body:{status:422,title:'Validation Error',data:errors}})
     }
     const {category_type,category_name} = req.body
-    const {filename,destination} = req.file
     Category.create({
         categoryName:category_name,
         categoryType:category_type,
         createdAt:new Date(Date.now()),
         updatedAt:new Date(Date.now()),
-        image:typeof filename !== 'undefined'?`${destination}${filename}`.slice(8):null
+        image:typeof req.file !== 'undefined'?`${req.file.destination}${req.file.filename}`.slice(8):null
     })
     .then(category=>{
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{category,msg:'Single Category added successfully'}}}) 
@@ -51,14 +50,13 @@ exports.updateCategory = (req,res,next)=>{
         return res.status(422).json({success:false,body:{status:422,title:'Validation Error',data:errors}})
     }
     const {category_type,category_name} = req.body
-    const {filename,destination} = req.file
     const {id} = req.params
     Category.findById(id)
     .then(category=>{
         category.categoryName = category_name
         category.categoryType = category_type
         category.updatedAt = new Date(Date.now())
-        category.image = typeof filename !== 'undefined'?`${destination}${filename}`.slice(8):category.image
+        category.image = typeof req.file !== 'undefined'?`${req.file.destination}${req.file.filename}`.slice(8):category.image
         return category.save()
     })
     .then(category=>{

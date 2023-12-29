@@ -16,3 +16,5 @@ const imageFileFilter = function(req,file,cb){
         return cb(null,false)
     }
 }
+
+exports.imageUpload = multer({storage:fileStorageEngine,fileFilter:imageFileFilter})
