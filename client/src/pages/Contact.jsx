@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../components/contact/Card";
-import Icons from "../../components/contact/Icons";
-import Feedback from "../../components/contact/Feedback";
+import Icons from "../components/contact/Icons";
+import Card from "../components/contact/Card";
+import Feedback from "../components/contact/Feedback";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-export default function ContactPage() {
+function Contact() {
   //AOS ANIMATION CODER
   useEffect(function () {
     Aos.init({ duration: 1000 });
@@ -50,12 +50,12 @@ export default function ContactPage() {
           ></span>
         </div>
       </div>
-      <section className=" py-6 ">
-        <div className="container mx-auto px-5">
-          <div className="relative flex flex-col min-w-0 break-words bg-gray-200 w-full mb-1 shadow-xl rounded-lg -mt-64">
-            <div className="px-2">
-              <div className="flex flex-wrap ">
-                <div className="w-full ">
+      <section className="relative py-16 ">
+        <div className="container mx-auto px-4">
+          <div className="relative flex flex-col min-w-0 break-words bg-gray-200 w-full mb-6 shadow-xl rounded-lg -mt-64">
+            <div className="px-6">
+              <div className="flex flex-wrap justify-center">
+                <div className="w-full px-4 flex justify-center">
                   <div className="relative">
                     <div className="mt-5 bg-gray-200">
                       <Card />
@@ -72,3 +72,5 @@ export default function ContactPage() {
     </>
   );
 }
+
+export default Contact;

@@ -1,0 +1,76 @@
+.container {
+  margin: 100px auto;
+  width: 350px;
+  height: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+ 
+.container h2, h3 {
+    text-align: center;
+    margin-top: 30px;
+    color: #819299;
+    font-size: 2rem;
+    padding: 10px 10px;
+ } 
+ .container p {
+    text-align: center;
+    margin-top: 30px;
+    color: #303335;
+    font-size: 1.3rem;
+    padding: 10px 10px;
+ } 
+
+ .form input{
+    display: block;
+    width: 80%;
+    height: 40px;
+    margin: 10px auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 16px;
+    color: black;
+ }
+    
+.form button {
+    display: block;
+    background-color: #7076ec;
+    width: 30%;
+    height: 40px;
+    margin: 10px auto;
+    border: 1px solid #9899eb;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 16px;
+    color: whitesmoke;
+}
+.container .forgot-password{
+    text-align: center;
+    margin-top: 10px;
+    color: #819299;
+    font-size: 1.2rem;
+    padding: 10px 10px;
+}
+   
+.container .verify-code{
+    background-color: #7076ec;
+    width: 30%;
+    height: 40px;
+    margin: 10px 5px;
+    border: 1px solid #9899eb;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 16px;
+    color: whitesmoke;
+}
+
+.container a {
+   
+    color: #999bbd;
+    font-size: 1.2rem;
+    display: block;
+    cursor: pointer;
+
+}
+ 

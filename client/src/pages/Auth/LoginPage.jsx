@@ -6,15 +6,51 @@ import Input from "../../components/Account/input";
 import FormHeader from "../../components/Account/FormHeader";
 import FormFooter from "../../components/Account/FormFooter";
 
+import axios from "axios";
+// import { useContext } from "react";
+// import { RecoveryContext } from "../../App";
+// import { RecoveryContext } from "../App";
+
 const fields = loginFields;
 let fieldsState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
 export default function Login() {
-  const [loginState, setLoginState] = useState(fieldsState);
+  // const [loginState, setLoginState] = useState(fieldsState);
+  // const { setPage, setOTP, setEmail } = useContext(RecoveryContext);
+  const [userEmail, setUserEmail] = useState(fieldsState);
+
+  function sendOtp() {
+    if (userEmail) {
+      axios
+        .get(`http://localhost:5000/check_email?email=${userEmail}`)
+        .then((response) => {
+          if (response.status === 200) {
+            const OTP = Math.floor(Math.random() * 9000 + 1000);
+            console.log(OTP);
+            setOTP(OTP);
+            setEmail(userEmail);
+
+            axios
+              .post("http://localhost:5000/send_email", {
+                OTP,
+                recipient_email: userEmail,
+              })
+              .then(() => setPage("otp"))
+              .catch(console.log);
+          } else {
+            alert("User with this email does not exist!");
+            console.log(response.data.message);
+          }
+        })
+        .catch(console.log);
+    } else {
+      alert("Please enter your email");
+    }
+  }
 
   const handleChange = (e) => {
-    setLoginState({ ...loginState, [e.target.id]: e.target.value });
+    setUserEmail({ ...userEmail, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -36,7 +72,7 @@ export default function Login() {
                 <Input
                   key={field.id}
                   handleChange={handleChange}
-                  value={loginState[field.id]}
+                  value={userEmail[field.id]}
                   labelText={field.labelText}
                   labelFor={field.labelFor}
                   id={field.id}
