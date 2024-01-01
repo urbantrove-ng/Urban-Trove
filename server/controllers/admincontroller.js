@@ -16,7 +16,7 @@ exports.getCategory = (req,res,next)=>{
     Category.findById(id)
     .then(category=>{
         if(!category){
-            return res.status(400).json({success:false,body:{status:400,title:'Validation Error',data:[{path:'id',msg:'No product found!',value:id,location:'params',type:'route parameter'}]}})    
+            return res.status(400).json({success:false,body:{status:400,title:'Verification Error',data:[{path:'id',msg:`No category found with id=${id} please verify id.`,value:id,location:'params',type:'route parameter'}]}})    
         }
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{category,msg:'Single Category fetched successfully'}}}) 
     })

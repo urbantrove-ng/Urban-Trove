@@ -5,7 +5,7 @@ const productSchema = new Schema({
         type:String,
         required:true
     },
-    category:{
+    categoryId:{
         type:Schema.Types.ObjectId,
         ref:'Category',
         required:true
@@ -36,7 +36,11 @@ const productSchema = new Schema({
         gender:String,
         seller:String,
         quantity:String,
-
+        sizes:[{
+            size:String
+        }],
+        address:String,
+        services:String
     },
     prices:{
      initialPrice:String,
@@ -47,6 +51,11 @@ const productSchema = new Schema({
             customerName:String,
             review:String
         }
-    ]
+    ],
+    userId:{
+        type:Schema.Types.ObjectId,
+        required:true,
+        ref:'User'
+    }
 })
 module.exports = model('Product',productSchema)
