@@ -28,5 +28,11 @@ exports.user =
     .normalizeEmail();
 exports.resetToken =
 body('resetToken')
-.notEmpty().withMessage('Invalid reset token')
-.trim()
+.notEmpty().withMessage('Invalid reset token');
+exports.catName = 
+body('category_name')
+.notEmpty().withMessage('Category name field is required');
+exports.catType = 
+body('category_type')
+.notEmpty().withMessage('Category type field is required');
+

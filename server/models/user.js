@@ -21,4 +21,4 @@ const userSchema = new Schema({
     resetTokenExpires:Date
 })
 
-module.exports = model('user',userSchema)
+module.exports = model('User',userSchema)
