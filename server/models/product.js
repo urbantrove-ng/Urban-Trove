@@ -29,15 +29,14 @@ const productSchema = new Schema({
     images:[
         {
             url:String,
-            name:String
         }
     ],
     additionalDetails:{
         gender:String,
         seller:String,
-        quantity:String,
+        quantity:Number,
         sizes:[{
-            size:String
+            type:String
         }],
         address:String,
         services:String

@@ -1,5 +1,7 @@
 const Category = require('../models/category')
 const Product = require('../models/product')
+const {server} = require('../config')
+
 
 
 exports.getCategoriesByType = (req,res,next)=>{
@@ -69,3 +71,37 @@ exports.fetchSingleService = (req,res,next)=>{
         console.log(error)
     })
 }
+exports.createNewProduct = (req,res,next)=>{
+    const body = req.body;
+    const imagesArr = []
+    const images = req.files
+    for(let image of images) {
+       imagesArr.push({url:`${server}`+`${image.destination}${image.filename}`.slice(8)})
+    }
+    Product.create({
+       productName:body.productName,
+       categoryId:body.categoryId,
+       productType:body.productType,
+       header:body.header,
+       link:{
+           text:body.linkText,
+           url:body.linkUrl
+       },
+       description:body.description,
+       images:imagesArr,
+       additionalDetails:{
+        gender:body.gender,
+        seller:body.seller,
+        quantity:4,
+        address:body.address,
+        services:body.services
+       },
+       userId:req.user._id
+    })
+    .then(product=>{
+        return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{product,msg:'Single product inserted successfully'}}}) 
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+   }
