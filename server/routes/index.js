@@ -16,11 +16,16 @@ router
 router
 .route('/product/:id')
 .get(controller.fetchSingleProduct)
+.patch([auth],[imageUpload.array('image'),controller.updateProduct])
+.delete([auth],controller.deleteProduct)
 router
 .route('/service/:id')
 .get(controller.fetchSingleService)
 router
 .route('/product')
 .post([auth],[imageUpload.array('image'),controller.createNewProduct])
+router
+.route('/product/image')
+.delete([auth],controller.deleteProductImage)
 
 module.exports = router
