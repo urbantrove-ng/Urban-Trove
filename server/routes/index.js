@@ -27,5 +27,8 @@ router
 router
 .route('/product/image')
 .delete([auth],controller.deleteProductImage)
+router
+.route('/search')
+.get(controller.searchProduct)
 
 module.exports = router

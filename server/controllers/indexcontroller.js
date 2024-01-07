@@ -110,7 +110,7 @@ exports.createNewProduct = (req,res,next)=>{
         console.log(error)
     })
    }
-   
+
    exports.fetchRelatedProducts = (req,res,next)=>{
     const {id,productType} = req.body
     Product
@@ -195,4 +195,13 @@ exports.createNewProduct = (req,res,next)=>{
     })
 
    }
-
+   exports.searchProduct = (req,res,next)=>{
+     const {q} = req.query
+     Product.find({productName:{$regex:new RegExp(q),$options:'i'}})
+     .then(products=>{
+        return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{products,msg:'Products fetched successfully'}}}) 
+     })
+     .catch(error=>{
+        console.log(error)
+     })
+   }
