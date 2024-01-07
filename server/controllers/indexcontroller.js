@@ -2,6 +2,7 @@ const Category = require('../models/category')
 const Product = require('../models/product')
 const {server} = require('../config')
 const fs = require('fs')
+const tryCatch = require('../utilities/catchasync')
 
 
 
@@ -98,7 +99,7 @@ exports.createNewProduct = (req,res,next)=>{
         services:body.services
        },
        prices:{
-      initialPrice:body.initialPrice,
+        actualPrice:body.actualPrice,
       discount:body.discount
        },
        userId:req.user._id
@@ -183,7 +184,7 @@ exports.createNewProduct = (req,res,next)=>{
         product.additionalDetails.quantity = body.quantity
         product.additionalDetails.address = body.address
         product.additionalDetails.services = body.services
-        product.prices.initialPrice = body.initialPrice
+        product.prices.actualPrice = body.actualPrice
         product.prices.discount = body.discount
         return product.save()
         .then(updatedProduct=>{
@@ -205,3 +206,41 @@ exports.createNewProduct = (req,res,next)=>{
         console.log(error)
      })
    }
+exports.fetchCart = (req,res,next)=>{
+if(!req.session['cart'] || typeof req.session['cart'] === "undefined"){req.session['cart'] = []}
+const cart = req.session['cart']
+res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{cart,msg:'User cart fetched'}}}) 
+}
+exports.addTocart = tryCatch(async(req,res,next)=>{
+    const {id} = req.body
+    if(!req.session['cart'] || typeof req.session['cart'] === "undefined"){req.session['cart'] = []}
+    const cart = req.session['cart']
+    const product = await Product.findOne({productType:'Product',_id:id})
+    if(product){
+    const existingItemIndex = cart.findIndex(cart=>cart.product.id.toString() === id.toString())
+    if(existingItemIndex > -1){
+       cart[existingItemIndex]['quantity'] = parseInt(cart[existingItemIndex]['quantity'])+1
+       cart[existingItemIndex]['total'] = Number(parseInt(cart[existingItemIndex]['quantity'])*parseFloat(cart[existingItemIndex]['product']['price']))
+    }else{
+        const cartItem = {product:{productName:product.productName,imageUrl:product.images[0].url,id:product._id,price:product.prices.actualPrice-product.prices.discount},quantity:1,total:product.prices.actualPrice}
+        cart.push(cartItem)
+    }
+   }
+     res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{cart,msg:'added to cart'}}}) 
+})
+exports.deleteFromCart = (req,res,next)=>{
+  const {id} = req.body
+   if(req.session['cart']&&req.session['cart'].length>0){
+    let cart = req.session['cart']
+    const existingItemIndex = cart.findIndex(cart=>cart.product.id.toString() === id.toString())
+    if(existingItemIndex > -1 && cart[existingItemIndex]['quantity']>1){
+        cart[existingItemIndex]['quantity'] = parseInt(cart[existingItemIndex]['quantity'])-1
+        cart[existingItemIndex]['total'] = Number(parseInt(cart[existingItemIndex]['quantity'])*parseFloat(cart[existingItemIndex]['product']['price']))
+     }else{
+        const filteredCart = cart.filter(cart=>cart.product.id.toString() !== id.toString())
+        req.session['cart'] = [...filteredCart]
+     }
+   }
+   res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{cart:req.session['cart'],msg:'added to cart'}}}) 
+}
+

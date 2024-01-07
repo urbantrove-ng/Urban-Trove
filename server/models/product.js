@@ -45,8 +45,8 @@ const productSchema = new Schema({
         phone:String
     },
     prices:{
-     initialPrice:String,
-     discount:String
+     actualPrice:String,
+     discount:String,
     },
     reviews:[
         {

@@ -30,5 +30,13 @@ router
 router
 .route('/search')
 .get(controller.searchProduct)
+router
+.route('/cart')
+.get(controller.fetchCart)
+.post(controller.addTocart)
+.delete(controller.deleteFromCart)
+router
+.route('/related_products')
+.get(controller.fetchRelatedProducts)
 
 module.exports = router
