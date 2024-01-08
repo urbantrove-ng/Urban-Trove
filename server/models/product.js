@@ -1,4 +1,6 @@
 const {model,Schema} = require('mongoose')
+const fs = require('fs')
+const {server} = require('../config')
 
 const productSchema = new Schema({
     productName:{
@@ -29,18 +31,18 @@ const productSchema = new Schema({
     images:[
         {
             url:String,
-            name:String
         }
     ],
     additionalDetails:{
         gender:String,
         seller:String,
-        quantity:String,
+        quantity:Number,
         sizes:[{
-            size:String
+            type:String
         }],
         address:String,
-        services:String
+        services:String,
+        phone:String
     },
     prices:{
      initialPrice:String,
@@ -58,4 +60,16 @@ const productSchema = new Schema({
         ref:'User'
     }
 })
+productSchema.methods.removeImage = function(id){
+   const images = this.images
+   const imageIndex = images.findIndex(img=>img._id.toString()===id.toString())
+   if(imageIndex >-1){
+       currentImage = images[imageIndex]
+   currentImageUrl = currentImage.url.replace(server,'./public')
+   fs.unlinkSync(currentImageUrl)
+   }
+const newImages = images.filter(img=>img._id.toString()!==id.toString())
+this.images = newImages 
+return this.save()
+}
 module.exports = model('Product',productSchema)
