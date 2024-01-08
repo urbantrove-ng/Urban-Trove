@@ -17,5 +17,5 @@ module.exports ={
     twitter_client_secret:process.env.TWITTER_CLIENT_SECRET,
     session_secret:process.env.SESSION_SECRET,
     facebook_client_id:process.env.FACEBOOK_CLIENT_ID,
-    facebook_client_secret: process.env.FACEBOOK_CLIENT_SECRET
+    facebook_client_secret: process.env.FACEBOOK_CLIENT_ID
 }

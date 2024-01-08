@@ -3,6 +3,12 @@ const Product = require('../models/product')
 
 exports.insertProduct = (req, res, next) => {
     const body = req.body
+    const imgFiles = req.files  // Assuming the field in your form is named 'images'
+
+    const images = imgFiles.map(file => ({
+        url: file.path,  // Assuming 'path' contains the file URL or path
+        name: file.originalname
+    }));
     Product.create({
         productName: body.productName,
         categoryId: body.categoryId,
@@ -32,6 +38,7 @@ exports.insertProduct = (req, res, next) => {
 
 exports.updateProduct = (req, res, next) => {
     const { id } = req.params
+
     Product.findById(id)
         .then(product => {
             product.productName = req.body.productName
@@ -62,18 +69,18 @@ exports.updateProduct = (req, res, next) => {
         })
 }
 
-exports.deleteProduct= (req,res,next)=>{
-    const {id} = req.params
-    Product.findOneAndDelete({_id:id}).then(deletedProduct=>{
+exports.deleteProduct = (req, res, next) => {
+    const { id } = req.params
+    Product.findOneAndDelete({ _id: id }).then(deletedProduct => {
         return res.status(200).json({
-            success:true,
-            body:{
-                status:200,
-                title:'Response Success',
-                data:{deletedProduct,msg:'Product deleted successfully'}
+            success: true,
+            body: {
+                status: 200,
+                title: 'Response Success',
+                data: { deletedProduct, msg: 'Product deleted successfully' }
             }
         })
-    }).catch(error=>{
+    }).catch(error => {
         res.send(error)
         console.log(error)
     })

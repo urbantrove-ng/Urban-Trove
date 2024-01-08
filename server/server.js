@@ -9,9 +9,9 @@ connectDb()
   })
   .then((connected) => {
     server.listen(port, () => {
-      console.log(`Listening on port ${port}`);
+      console.log(`Listening on port http://localhost:${port}`);
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.log("s"+error);
   });
