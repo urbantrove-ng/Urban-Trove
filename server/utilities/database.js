@@ -5,5 +5,6 @@ module.exports = ()=>{
    return mongoose.connect(database_uri,{
     dbName:'urbantrovedb',
     autoIndex:false,
+   //  tls:true,
    })
 }

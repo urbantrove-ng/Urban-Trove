@@ -25,7 +25,7 @@ exports.signup = (req,res,next)=>{
        res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{...createdUser,accessToken:token,msg:'Registration was successful'}}})
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 }
 exports.signin = (req,res,next)=>{
@@ -50,7 +50,7 @@ exports.signin = (req,res,next)=>{
    })
   })
   .catch(err=>{
-    console.log(err)
+    next(err)
   })
 }
 exports.forgotPassword = (req,res,next)=>{
@@ -75,7 +75,7 @@ User.findOne({email:email})
   })
 })
 .catch(err=>{
-  console.log(err)
+  next(err)
 })
 }
 exports.resetPassword = (req,res,next)=>{
@@ -102,6 +102,6 @@ if(!errors.isEmpty()){
     })
   })
   .then(err=>{
-    console.log(err)
+    next(err)
   })
 }

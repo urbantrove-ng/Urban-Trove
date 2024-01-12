@@ -13,7 +13,7 @@ exports.getCategoriesByType = (req,res,next)=>{
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{categories,msg:'Single Category fetched successfully'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 }
 
@@ -26,7 +26,7 @@ exports.fetchAllProducts = (req,res,next)=>{
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{products,msg:'Products fetched successfully'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 }
 exports.fetchAllServices = (req,res,next)=>{
@@ -38,7 +38,7 @@ exports.fetchAllServices = (req,res,next)=>{
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{services,msg:'Services fetched successfully'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 }
 exports.fetchSingleProduct = (req,res,next)=>{
@@ -54,7 +54,7 @@ exports.fetchSingleProduct = (req,res,next)=>{
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{product,msg:'Product fetched successfully'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 }
 exports.fetchSingleService = (req,res,next)=>{
@@ -70,7 +70,7 @@ exports.fetchSingleService = (req,res,next)=>{
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{service,msg:'Service fetched successfully'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 }
 exports.createNewProduct = (req,res,next)=>{
@@ -108,7 +108,7 @@ exports.createNewProduct = (req,res,next)=>{
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{product,msg:'Single product inserted successfully'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
    }
 
@@ -124,7 +124,7 @@ exports.createNewProduct = (req,res,next)=>{
             {products,msg:'Related Products fetched successfully'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
    }
    exports.deleteProductImage = (req,res,next)=>{
@@ -140,7 +140,7 @@ exports.createNewProduct = (req,res,next)=>{
         })
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
    }
    exports.deleteProduct = (req,res,next)=>{
@@ -158,7 +158,7 @@ exports.createNewProduct = (req,res,next)=>{
             return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{product,msg:'Product was successfully removed'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
    }
    exports.updateProduct = (req,res,next)=>{
@@ -192,7 +192,7 @@ exports.createNewProduct = (req,res,next)=>{
         })
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 
    }
@@ -203,7 +203,7 @@ exports.createNewProduct = (req,res,next)=>{
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{products,msg:'Products fetched successfully'}}}) 
      })
      .catch(error=>{
-        console.log(error)
+        next(error)
      })
    }
 exports.fetchCart = (req,res,next)=>{

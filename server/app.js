@@ -14,6 +14,8 @@ const cors = require ('cors');
 const { allowedOrigin,session_secret,database_uri } = require('./config');
 const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session)
+const expressErrorHandler = require('./middlewares/errorhandler')
+const notFoundMiddleware = require('./middlewares/notfound')
 
 const app = express();
 const limiter = rateLimit({
@@ -46,6 +48,9 @@ app.use(session({
 app.use('/api/v1',rootRoutes);
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/user',userRoutes);
-app.use('/api/v1/admin',adminRoutes)
+app.use('/api/v1/admin',adminRoutes);
+app.use(notFoundMiddleware)
+app.use(expressErrorHandler)
+
 
 module.exports = app;

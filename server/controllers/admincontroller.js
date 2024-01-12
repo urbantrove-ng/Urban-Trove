@@ -8,7 +8,7 @@ exports.getAllCategories = (req,res,next)=>{
         res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{categories,msg:'Categories fetched successfully'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 }
 exports.getCategory = (req,res,next)=>{
@@ -21,7 +21,7 @@ exports.getCategory = (req,res,next)=>{
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{category,msg:'Single Category fetched successfully'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 }
 exports.addNewCategory = (req,res,next)=>{
@@ -41,7 +41,7 @@ exports.addNewCategory = (req,res,next)=>{
         return res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{category,msg:'Single Category added successfully'}}}) 
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 }
 exports.updateCategory = (req,res,next)=>{
@@ -71,6 +71,6 @@ exports.deleteCategory = (req,res,next)=>{
         res.status(200).json({success:true,body:{status:200,title:'Response Success',data:{category,msg:'Single Category deleted successfully'}}})   
     })
     .catch(error=>{
-        console.log(error)
+        next(error)
     })
 }

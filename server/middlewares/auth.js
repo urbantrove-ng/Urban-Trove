@@ -5,7 +5,7 @@ const {jwt_secret,jwt_expires} = require('../config')
 exports.auth = (req,res,next)=>{
     passport.authenticate("jwt",(err,user,info)=>{
       if(!user){
-        return res.status(401).json({success:false,body:{status:401,title:'Unauthorized Request',data:{location:'headers',path:'authorization',field:'token',msg:"User is not authenticated"}}})
+        return res.status(401).json({success:false,body:{status:401,title:'Authentication Error',data:{location:'headers',path:'authorization',field:'token',msg:"User is not authenticated"}}})
       }
       req.user = user
       next()
