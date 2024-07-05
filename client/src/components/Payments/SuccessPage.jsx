@@ -7,7 +7,7 @@ function SuccessPage() {
   const [showReceipt, setShowReceipt] = React.useState(false);
 
   const handleViewOrder = () => {
-    console.log("View Order clicked");
+    console.log("View Order was clicked");
   };
 
   const back =() => {
