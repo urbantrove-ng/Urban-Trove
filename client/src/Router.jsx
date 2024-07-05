@@ -7,6 +7,9 @@ import HomePage from "./pages/Layout/HomePage";
 import AboutPage from "./pages/Layout/AboutPage";
 import ContactPage from "./pages/Layout/ContactPage";
 import Header from "./components/Header/Header";
+import PaymentMethod from "./components/Payments/PaymentMethod"
+import CardPage from "./components/Payments/CardPage"
+import SuccessPage from "./components/Payments/SuccessPage"
 import Footer from "./Footer";
 
 // Routes from home page
@@ -49,6 +52,9 @@ export default function ProjectRoutes() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgotpass" element={<ForgotPage />} />
+          <Route path="/payment" element={<PaymentMethod />} />
+          <Route path="/card" element={<CardPage />} />
+          <Route path="/success" element={<SuccessPage />} />
         </Routes>
         <Footer />
       </Router>
