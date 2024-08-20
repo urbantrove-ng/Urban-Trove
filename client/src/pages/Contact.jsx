@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Icons from "../components/contact/Icons";
 import Card from "../components/contact/Card";
 import Feedback from "../components/contact/Feedback";

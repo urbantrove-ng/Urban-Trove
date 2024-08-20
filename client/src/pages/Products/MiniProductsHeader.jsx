@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import {  useState } from "react";
 import { ProductMiniheader } from "../../data/productsData";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaTimes } from "react-icons/fa";
@@ -13,7 +13,7 @@ export default function MiniProductsHeader() {
   return (
     <div className="relative">
       <div
-        className={`bg-[#d1d5db] z-20 1sm:rounded-br-[5px] mt-[8.7rem] md:mt-[9.5rem] 1sm:fixed sm:top-[1rem] 1sm:top-[2rem] group sm:mt-[9rem] 1sm:w-[10rem] flex 1sm:flex-col 1sm:gap-[1rem] 1sm:pl-[2rem] justify-center gap-[5rem] md:gap-[4rem] transition-all duration-500 ${
+        className={`bg-[#d1d5db] z-20 1sm:rounded-br-[5px]  1sm:fixed sm:top-[1rem] 1sm:top-[2rem] group  1sm:w-[10rem] flex 1sm:flex-col 1sm:gap-[1rem] 1sm:pl-[2rem] justify-center gap-[5rem] md:gap-[4rem] transition-all duration-500 ${
           openSidebar ? "1sm:left-0" : "1sm:left-[-11rem]"
         }`}
       >

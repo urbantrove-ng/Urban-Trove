@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function FormFooter({ paragraph, linkName, linkUrl = "#" }) {
   return (
     <div className="mb-1">
-      <p className="mt-2 text-center text-sm text-gray-600 mt-5">
+      <p className=" text-center text-sm text-gray-600 mt-5">
         {paragraph}{" "}
-        <Link
+        <NavLink
           to={linkUrl}
           className="font-medium text-green-900 hover:text-yellow-900"
         >
           {linkName}
-        </Link>
+        </NavLink>
       </p>
     </div>
   );

@@ -1,68 +1,62 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="py-[4rem] px-[15rem] 1lg:px-[3rem] z-10 sm:px-[2rem] 1sm:px-[1rem] bg-[#09090b] text-white font-raleway">
-      <div className="flex 1sm:flex-col 1sm:gap-[1rem] justify-between 1sm:justify-items-start 1sm-[4rem]">
+    <div className=" p-10 bg-[#09090b] text-white font-raleway">
+      <div className="lg:flex lg:justify-around grid grid-cols-1 gap-16">
         <div className="relative">
           <h4 className="text-[1.5rem] uppercase font-[500] border-b-[0.8px] border-footer mb-[0.8rem]">
             Quick Links
           </h4>
-          <Link
+          <NavLink
             className="grid text-footer no-underline text-[0.8rem] font-[400] uppercase mb-[0.4rem] hover:text-white"
             to=""
           >
             About
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             className="grid text-footer no-underline text-[0.8rem] font-[400] uppercase mb-[0.4rem] hover:text-white"
             to="/products"
           >
-            Products
-          </Link>
-          <Link
+            FAQS
+          </NavLink>
+          <NavLink
             className="grid text-footer no-underline text-[0.8rem] font-[400] uppercase mb-[0.4rem] hover:text-white"
             to="/services"
           >
-            Services
-          </Link>
-          <Link
-            className="grid text-footer no-underline text-[0.8rem] font-[400] uppercase mb-[0.4rem] hover:text-white"
-            to=""
-          >
-            Cart
-          </Link>
-          <Link
+            Refund policy
+          </NavLink>
+
+          <NavLink
             className="grid text-footer no-underline text-[0.8rem] font-[400] uppercase mb-[0.4rem] hover:text-white"
             to="/contact"
           >
             Contact us
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             className="grid text-footer no-underline text-[0.8rem] font-[400] uppercase mb-[0.4rem] hover:text-white"
             to=""
           >
             Sell on urban trove
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             className="grid text-footer no-underline text-[0.8rem] font-[400] uppercase mb-[0.4rem] hover:text-white"
             to=""
           >
-            Checkout
-          </Link>
-          <Link
+            terms and conditions
+          </NavLink>
+          <NavLink
             className="grid text-footer no-underline text-[0.8rem] font-[400] uppercase mb-[0.4rem] hover:text-white"
             to=""
           >
             Privacy policy
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             className="grid text-footer no-underline text-[0.8rem] font-[400] uppercase mb-[0.4rem] hover:text-white"
             to=""
           >
             Report fraud
-          </Link>
+          </NavLink>
         </div>
         <div className="relative">
           <h4 className="text-[1.5rem] uppercase font-[500] border-b-[0.8px] border-footer mb-[0.8rem]">
@@ -71,7 +65,7 @@ export default function Footer() {
           <p className="mb-[0.5rem] text-footer">
             Ask us any question you might have
           </p>
-          <form action="">
+          <form action="" className=" relative">
             <textarea
               className="bg-transparent border-[1px] border-footer text-white p-5 rounded-[5px] focus:outline-none"
               name=""
@@ -80,7 +74,7 @@ export default function Footer() {
               rows="5"
               placeholder="I want ..."
             ></textarea>
-            <button className="absolute right-[5%] 1sm:right-[60%] sm:right-[30%] tn:right-[5%] bottom-[15%] 1sm:bottom-[5%] sm:bottom-[2%] border-0 bg-transparent text-white p-[0.3rem] rounded-[5px] cursor-pointer hover:text-primaryTwo">
+            <button className="absolute lg:right-4 right-8 bottom-4 cursor-pointer hover:text-primaryTwo">
               Send &rarr;
             </button>
           </form>
@@ -104,12 +98,12 @@ export default function Footer() {
         <p>
           Designed by{" "}
           <span>
-            <Link
+            <NavLink
               className="no-underline bg-gradient-to-r from-primaryTwo to-primaryOne bg-clip-text text-transparent hover:text-white"
               to="/"
             >
               Urban Trove
-            </Link>
+            </NavLink>
           </span>
         </p>
       </div>

@@ -1,188 +1,313 @@
-import React, { useState } from "react";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Tab,
+  TabGroup,
+  TabList,
+  TabPanel,
+  TabPanels,
+} from "@headlessui/react";
+import { StarIcon } from "@heroicons/react/20/solid";
+import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useParams } from "react-router-dom";
-import { productData } from "../../data/productsData";
+import { useEffect, useState } from "react";
+import { useUrban } from "../../context/UrbanContext";
+import axios from "../../Api/axios";
+import { ShimmerButton, ShimmerDiv } from "shimmer-effects-react";
+import Spinner from "../../components/Spinner";
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export default function ProductDetail() {
-  const { details } = useParams();
-  const product = productData.find((product) => product.details === details);
-  const [selectedContent, setSelectedContent] = useState("Description");
-  const [quantity, setQuantity] = useState(1);
-
-  if (!product) {
-    return <div>Product not found</div>;
-  }
-
-  const handleContentClick = (content) => {
-    setSelectedContent(content);
-  };
-
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const decreaseQuantity = () => {
-    setQuantity(quantity - 1);
-  };
-
+  const { id } = useParams();
+  const [product, setProductData] = useState(null);
   const {
-    mainImage,
-    otherImage1,
-    otherImage2,
-    otherImage3,
-    otherImage4,
-    header,
-    price,
-    seller,
-    description,
-  } = product;
+    addToCart,
+    setData,
+    removeItemfromCart,
 
-  const actualPrice = parseInt(price.actualPrice);
-  const discountPrice = parseInt(price.discountPrice);
+    isClickedAdd,
+    isClickedRemoved,
+  } = useUrban();
+  const [addMoreItem, setAddMoreItem] = useState(false);
+  const [counter, setCounter] = useState(0);
 
-  const formattedActualPrice = actualPrice.toLocaleString();
-  const formattedDiscountedPrice = discountPrice.toLocaleString();
+  const getAllProducts = async () => {
+    const data = await axios.get(`/product/${id}`);
+    setProductData(data?.data?.data?.product);
+  };
 
-  const savedAmount = discountPrice - actualPrice;
-  const formattedSavedAmount = savedAmount.toLocaleString();
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      const response = await axios.get("/cart", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      const data = response?.data?.data?.cart;
+      setData(data);
+    };
+    fetchCart();
+  }, [setData, addMoreItem]);
+
+  const onHandleAddItems = (id) => {
+    addToCart(id);
+  };
+
+  const onHandleRemoveItems = (id) => {
+    removeItemfromCart(id);
+  };
 
   return (
-    <div className="mt-[8rem] md:mt-[6rem] sm:mt-[4.5rem] mx-[1rem] md:mx-[4rem] mb-[2rem] py-[2rem] px-[3rem] md:px-0 sm:px-0 font-sans">
-      <div className="flex sm:flex-col 2lg:flex-col 2lg:justify-center 2lg:items-center gap-[10rem] xl:gap-[3rem] 2lg:gap-[9rem] sm:gap-[1rem]">
-        <div className="flex 2lg:flex-row-reverse sm:flex-col-reverse gap-[1rem]">
-          <div className="sm:flex sm:gap-[0.5rem]">
-            {otherImage1 && (
-              <div className="w-[4rem] h-[4rem] mb-[0.5rem] cursor-pointer hover:border-[1px] border-black">
-                <img
-                  className="w-full h-full rounded-[5px]"
-                  src={otherImage1}
-                  alt=""
-                />
-              </div>
-            )}
-            {otherImage2 && (
-              <div className="w-[4rem] h-[4rem] mb-[0.5rem] cursor-pointer hover:border-[1px] border-black">
-                <img
-                  className="w-full h-full rounded-[5px]"
-                  src={otherImage2}
-                  alt=""
-                />
-              </div>
-            )}
-            {otherImage3 && (
-              <div className="w-[4rem] h-[4rem] mb-[0.5rem] cursor-pointer hover:border-[1px] border-black">
-                <img
-                  className="w-full h-full rounded-[5px]"
-                  src={otherImage3}
-                  alt=""
-                />
-              </div>
-            )}
-            {otherImage4 && (
-              <div className="w-[4rem] h-[4rem] mb-[0.5rem] cursor-pointer hover:border-[1px] border-black">
-                <img
-                  className="w-full h-full rounded-[5px]"
-                  src={otherImage4}
-                  alt=""
-                />
-              </div>
-            )}
-          </div>
-          <div className="w-[30rem] sm:w-[21.4rem] sm:h-[19rem]">
-            <img
-              className="w-full h-full rounded-[5px]"
-              src={mainImage}
-              alt=""
-            />
-          </div>
-        </div>
-
-        <div className="mt-[1rem] 2lg:mt-[-10rem] sm:mt-0 p-[2rem] sm:p-0 w-[60rem] sm:w-[21rem] 2lg:w-[40rem]">
-          <h2 className="text-[2rem] sm:text-[1.4rem] font-[400] mb-[0.5rem]">
-            {details}
-          </h2>
-          <p className="text-[0.8rem] mb-[2rem] 2lg:mb-[1rem] sm:mb-[1rem]">
-            Sold by: {seller}
-          </p>
-          <hr className="mt-[-1rem] border-[1px] border-[#d6d3d1] h-[1px]" />
-          <div className="flex  items-center gap-[5rem] sm:gap-[2rem] mt-[3rem] 2lg:mt-0 sm:mt-[0.3rem] mb-[0.5rem]">
-            <h4 className="text-[2rem] sm:text-[1.4rem] font-[500]">
-              &#8358;{formattedActualPrice}
-            </h4>
-            <h5 className="text-[1.4rem] sm:text-[1rem] font-[400] text-[#737373] line-through">
-              &#8358;{formattedDiscountedPrice}
-            </h5>
-          </div>
-          <h6 className="text-[0.8rem] font-[400] text-[#15803d] mb-[3rem] 2lg:mb-[1rem] sm:mb-[1rem]">
-            You save &#8358;{formattedSavedAmount}
-          </h6>
-          <hr className="mt-[-1rem] border-[1px] border-[#d6d3d1] h-[1px]" />
-          <div className="flex sm:flex-col h-[2rem] justify-center items-center gap-[0.4rem] mt-[3rem] sm:mt-[5rem]">
-            <div className="flex items-center border-[0.5px] border-black h-[3rem] ">
-              <button
-                className="w-[2rem] h-[2.9rem] flex border-0 rounded-0 justify-center items-center text-black bg-[#e5e5e5] transition duration-300 hover:bg-[#a1a1aa]"
-                onClick={decreaseQuantity}
-              >
-                -
-              </button>
-              <p className="h-[2.9rem] w-[2rem] flex justify-center items-center bg-white">
-                {quantity}
-              </p>
-              <button
-                className="w-[2rem] h-[2.9rem] flex border-0 rounded-0 justify-center items-center text-black bg-[#e5e5e5] transition duration-300 hover:bg-[#a1a1aa]"
-                onClick={increaseQuantity}
-              >
-                +
-              </button>
+    <div className="bg-white pt-20">
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
+          {/* Image gallery */}
+          <TabGroup className="flex flex-col-reverse">
+            {/* Image selector */}
+            <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
+              <TabList className="grid grid-cols-4 gap-6">
+                {product &&
+                  product?.images?.map((image) => (
+                    <Tab
+                      key={image._id}
+                      className="group relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
+                    >
+                      <span className="sr-only">{image.name}</span>
+                      <span className="absolute inset-0 overflow-hidden rounded-md">
+                        <img
+                          alt=""
+                          src={image.url}
+                          className="h-full w-full object-cover object-center"
+                        />
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 group-data-[selected]:ring-indigo-500"
+                      />
+                    </Tab>
+                  ))}
+                {product == null &&
+                  Array.from({ length: 3 }, (_, i) => (
+                    <div key={i}>
+                      <ShimmerDiv mode="light" height={100} width={100} />
+                    </div>
+                  ))}
+              </TabList>
             </div>
-            <button className="py-[0.5rem] sm:py-[0.8rem] px-[1rem] w-[13rem] sm:w-[18rem] h-[3rem] cursor-pointer border-0 text-white rounded-[3px] bg-primaryTwo">
-              Add To Cart
-            </button>
-            <button className="py-[0.5rem] sm:py-[0.8rem] px-[1rem] w-[13rem] sm:w-[18rem] h-[3rem] cursor-pointer border-0 text-white rounded-[3px] bg-[#a16207]">
-              Buy Now
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="mt-[8rem] 2lg:mt-[4rem] sm:mt-[8rem] font-roboto">
-        <ul className="flex justify-center items-center gap-[5rem] 2lg:gap-[7rem] sm:gap-[2rem] mb-[2rem] border-b-[1px] border-[#a3a3a3] py-[1rem]">
-          <li
-            className={`text-[#6b7280] list-none text-[1.5rem] cursor-pointer font-[600] ${
-              selectedContent === "Description" ? "text-[#111111]" : ""
-            }`}
-            onClick={() => handleContentClick("Description")}
-          >
-            Description
-          </li>
-          <li
-            className={`text-[#6b7280] list-none text-[1.5rem] cursor-pointer font-[600] ${
-              selectedContent === "Shipping" ? "text-[#111111]" : ""
-            }`}
-            onClick={() => handleContentClick("Shipping")}
-          >
-            Shipping
-          </li>
-          <li
-            className={`text-[#6b7280] list-none text-[1.5rem] cursor-pointer font-[600] ${
-              selectedContent === "Reviews" ? "text-[#111111]" : ""
-            }`}
-            onClick={() => handleContentClick("Reviews")}
-          >
-            Reviews
-          </li>
-        </ul>
-        <div className="bg-white sm:mt-[-1rem] py-[2rem] px-[4rem] sm:px-[1rem] rounded-[5px] text-[1.2rem]">
-          {selectedContent === "Description" && <p>{description}</p>}
-          {selectedContent === "Shipping" && (
-            <p>Estimated delivery time: 1 - 7 days</p>
-          )}
-          {selectedContent === "Reviews" && <p>There are no reviews yet.</p>} 
-        </div>
 
-        <div className="related">
-          <h3 className="text-center mt-[10rem] 2lg:mt-[3rem] text-[1.3rem] border-b-[1px] border-[#a3a3a3]">
-            Related Products
-          </h3>
-          <div className="h-[20rem] mt-[1.5rem]"></div>
+            <TabPanels className="aspect-h-1 aspect-w-1 w-full">
+              {product &&
+                product?.images?.map((image) => (
+                  <TabPanel key={image._id}>
+                    <img
+                      alt={image.alt}
+                      src={image.url}
+                      className="xl:h-[60vh] xlw-full object-cover object-center sm:rounded-lg"
+                    />
+                  </TabPanel>
+                ))}
+              {product == null && (
+                <ShimmerDiv mode="light" height={400} width={350} />
+              )}
+            </TabPanels>
+          </TabGroup>
+
+          {/* Product info */}
+          <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
+            {product && (
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+                {product?.productName}
+              </h1>
+            )}
+            {product === null && (
+              <ShimmerButton size="md" mode="light" width={300} rounded={0.4} />
+            )}
+
+            <div className="mt-3">
+              <h2 className="sr-only">Product information</h2>
+              {product && (
+                <p className="text-3xl tracking-tight text-gray-900">
+                  ₦ {Number(product?.prices?.actualPrice).toLocaleString()}
+                </p>
+              )}
+              {product === null && (
+                <ShimmerButton
+                  size="md"
+                  mode="light"
+                  width={200}
+                  rounded={0.4}
+                />
+              )}
+            </div>
+
+            {/* Reviews */}
+            <div className="mt-3">
+              <h3 className="sr-only">Reviews</h3>
+              <div className="flex items-center">
+                <div className="flex items-center">
+                  {[0, 1, 2, 3, 4].map((rating) => (
+                    <StarIcon
+                      key={rating}
+                      aria-hidden="true"
+                      className={classNames(
+                        product?.rating > rating
+                          ? "text-indigo-500"
+                          : "text-gray-300",
+                        "h-5 w-5 flex-shrink-0"
+                      )}
+                    />
+                  ))}
+                </div>
+                <p className="sr-only">{1} out of 5 stars</p>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <h3 className="sr-only">Description</h3>
+
+              <div
+                dangerouslySetInnerHTML={{ __html: product?.description }}
+                className="space-y-6 text-base text-gray-700"
+              />
+            </div>
+
+            <form className="mt-6">
+              <div className="mt-10 flex">
+                {counter === 0 && (
+                  <button
+                    type="submit"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCounter(1);
+                      setAddMoreItem(true);
+                      onHandleAddItems(product._id);
+                    }}
+                    className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-primaryTwo px-8 py-3 text-base font-medium text-white  hover:bg-primaryOne focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                  >
+                    Add to bag
+                  </button>
+                )}
+                {addMoreItem && counter >= 1 && (
+                  <div className=" flex items-center gap-2">
+                    <button
+                      disabled={isClickedRemoved}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (counter >= 1) {
+                          setCounter((prevCounter) => prevCounter - 1);
+                          onHandleRemoveItems(product._id);
+                        }
+                      }}
+                      className={
+                        !isClickedRemoved
+                          ? " w-[40px] h-[30px] bg-primaryOne font-bold text-white"
+                          : " grayscale  w-[40px] h-[30px] bg-primaryOne disabled:bg-black opacity-[50%] "
+                      }
+                    >
+                      -
+                    </button>
+                    {isClickedAdd||isClickedRemoved ? (
+                      <Spinner />
+                    ) : (
+                      <p className=" w-[24px] h-[24px] flex justify-center items-center">
+                        {counter}
+                      </p>
+                    )}
+                    <button
+                      disabled={isClickedAdd}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCounter((prevCounter) => prevCounter + 1);
+                        onHandleAddItems(product._id);
+                      }}
+                      className={
+                        !isClickedAdd
+                          ? " w-[40px] h-[30px] bg-primaryTwo font-bold text-white"
+                          : " grayscale  w-[40px] h-[30px] bg-primaryTwo disabled:bg-black opacity-[50%] "
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  className="ml-4 flex items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+                >
+                  <HeartIcon
+                    aria-hidden="true"
+                    className="h-6 w-6 flex-shrink-0"
+                  />
+                  <span className="sr-only">Add to favorites</span>
+                </button>
+              </div>
+            </form>
+
+            <section aria-labelledby="details-heading" className="mt-12">
+              <h2 id="details-heading" className="sr-only">
+                Additional details
+              </h2>
+
+              <div className="divide-y divide-gray-200 border-t">
+                <Disclosure as="div">
+                  <h3>
+                    <DisclosureButton className="group relative flex w-full items-center justify-between py-6 text-left">
+                      <span className="text-sm font-medium text-gray-900 group-data-[open]:text-indigo-600">
+                        Shipping
+                      </span>
+                      <span className="ml-6 flex items-center">
+                        <PlusIcon
+                          aria-hidden="true"
+                          className="block h-6 w-6 text-gray-400 group-hover:text-gray-500 group-data-[open]:hidden"
+                        />
+                        <MinusIcon
+                          aria-hidden="true"
+                          className="hidden h-6 w-6 text-indigo-400 group-hover:text-indigo-500 group-data-[open]:block"
+                        />
+                      </span>
+                    </DisclosureButton>
+                  </h3>
+                  <DisclosurePanel className="prose prose-sm pb-6">
+                    <ul role="list">
+                      <li>Estimated delivery time: 1 - 7 days</li>
+                    </ul>
+                  </DisclosurePanel>
+                </Disclosure>
+                <Disclosure as="div">
+                  <h3>
+                    <DisclosureButton className="group relative flex w-full items-center justify-between py-6 text-left">
+                      <span className="text-sm font-medium text-gray-900 group-data-[open]:text-indigo-600">
+                        Reviews
+                      </span>
+                      <span className="ml-6 flex items-center">
+                        <PlusIcon
+                          aria-hidden="true"
+                          className="block h-6 w-6 text-gray-400 group-hover:text-gray-500 group-data-[open]:hidden"
+                        />
+                        <MinusIcon
+                          aria-hidden="true"
+                          className="hidden h-6 w-6 text-indigo-400 group-hover:text-indigo-500 group-data-[open]:block"
+                        />
+                      </span>
+                    </DisclosureButton>
+                  </h3>
+                  <DisclosurePanel className="prose prose-sm pb-6">
+                    <ul role="list">
+                      <li>There are no reviews yet.</li>
+                    </ul>
+                  </DisclosurePanel>
+                </Disclosure>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </div>

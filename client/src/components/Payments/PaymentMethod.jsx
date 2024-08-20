@@ -15,7 +15,6 @@ const PaymentOption = ({ icon, label, additionalContent, onSelect }) => (
     />
   </div>
 );
-const navigate = useNavigate();
 
 function PaymentMethod() {
   const [selectedPayment, setSelectedPayment] = useState(null);

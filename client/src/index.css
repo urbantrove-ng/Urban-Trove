@@ -1,7 +1,39 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Coiny&family=Inter:wght@400;600;700&family=Lora:wght@400;500&family=Raleway:wght@200;300;400&family=Sono:wght@400;600;700&family=Ubuntu:wght@300;400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Coiny&family=Inter:wght@400;600;700&family=Lora:wght@400;500&family=Raleway:wght@200;300;400&family=Sono:wght@400;600;700&family=Ubuntu:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;600;700&display=swap");
 /* Define your Tailwind CSS */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@layer components {
+  .hamburger div:first-child {
+    @apply rotate-45 translate-y-1.5;
+  }
+  .hamburger div:last-child {
+    @apply -rotate-45 -translate-y-1;
+  }
+}
+* {
+  @apply transition-colors duration-200;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+body{
+  height: 100%;
+}

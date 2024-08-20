@@ -6,11 +6,10 @@ import sneaker from "../assets/image/sneaker.png";
 import dress from "../assets/image/dress.png";
 import polo from "../assets/image/polo.jpg";
 import sunglass from "../assets/image/sunglass.webp";
-
 const productData = [
   {
-    id: 1,
-    mainImage: handbag, 
+    id: "123456",
+    mainImage: handbag,
     otherImage1: handbag,
     otherImage2: handbag,
     header: "Bags",
@@ -20,8 +19,8 @@ const productData = [
       url: "/products",
     },
     price: {
-      actualPrice: "9900",
-      discountPrice: "11000",
+      actualPrice: 9900,
+      discountPrice: 11000,
       discount: "-10%",
     },
     seller: "Urban Trove",
@@ -29,7 +28,7 @@ const productData = [
       "Cute Leather Bag For Women, Lorem ipsum dolor sit amet consectetur adipisicing elit. Non fugitquod expedita maxime, quidem minus et? Expedita temporibus porrodolore deleniti exercitationem rem? Necessitatibus aspernaturtemporibus, repudiandae dolore pariatur ad. ",
   },
   {
-    id: 2,
+    id: "23456785",
     mainImage: heel,
     otherImage1: heel,
     otherImage2: heel,
@@ -42,8 +41,8 @@ const productData = [
       url: "/products",
     },
     price: {
-      actualPrice: "18750",
-      discountPrice: "25000",
+      actualPrice: 18750,
+      discountPrice: 25000,
       discount: "-20%",
     },
     seller: "Urban Trove",
@@ -51,7 +50,7 @@ const productData = [
       "Nude Heels, Lorem ipsum dolor sit amet consectetur adipisicing elit. Non fugitquod expedita maxime, quidem minus et? Expedita temporibus porrodolore deleniti exercitationem rem? Necessitatibus aspernaturtemporibus, repudiandae dolore pariatur ad. ",
   },
   {
-    id: 3,
+    id: "23445566",
     mainImage: skincare,
     otherImage1: skincare,
     otherImage2: skincare,
@@ -63,8 +62,8 @@ const productData = [
       url: "/products",
     },
     price: {
-      actualPrice: "13050",
-      discountPrice: "15000",
+      actualPrice: 13050,
+      discountPrice: 15000,
       discount: "-13%",
     },
     seller: "Urban Trove",
@@ -72,7 +71,7 @@ const productData = [
       "Urban Trove Skincare Package, Lorem ipsum dolor sit amet consectetur adipisicing elit. Non fugitquod expedita maxime, quidem minus et? Expedita temporibus porrodolore deleniti exercitationem rem? Necessitatibus aspernaturtemporibus, repudiandae dolore pariatur ad. ",
   },
   {
-    id: 4,
+    id: "234566764",
     mainImage: headphone,
     otherImage1: headphone,
     otherImage2: headphone,
@@ -84,8 +83,8 @@ const productData = [
       url: "/products",
     },
     price: {
-      actualPrice: "19240",
-      discountPrice: "26000",
+      actualPrice: 19240,
+      discountPrice: 26000,
       discount: "-20%",
     },
     seller: "Urban Trove",
@@ -93,7 +92,7 @@ const productData = [
       "JBL Heaphones 360pmw, Lorem ipsum dolor sit amet consectetur adipisicing elit. Non fugitquod expedita maxime, quidem minus et? Expedita temporibus porrodolore deleniti exercitationem rem? Necessitatibus aspernaturtemporibus, repudiandae dolore pariatur ad. ",
   },
   {
-    id: 5,
+    id: "3435664e456",
     mainImage: sneaker,
     otherImage1: sneaker,
     otherImage2: sneaker,
@@ -104,7 +103,7 @@ const productData = [
       url: "/products",
     },
     price: {
-      actualPrice: "32680",
+      actualPrice: 32680,
       discountPrice: "43000",
       discount: "-24%",
     },
@@ -113,7 +112,7 @@ const productData = [
       "Addidas Men's White Forum 84 Low Sneakers, Lorem ipsum dolor sit amet consectetur adipisicing elit. Non fugitquod expedita maxime, quidem minus et? Expedita temporibus porrodolore deleniti exercitationem rem? Necessitatibus aspernaturtemporibus, repudiandae dolore pariatur ad. ",
   },
   {
-    id: 6,
+    id: "567876543322",
     mainImage: dress,
     otherImage1: dress,
     otherImage2: dress,
@@ -125,8 +124,8 @@ const productData = [
       url: "/products",
     },
     price: {
-      actualPrice: "7200",
-      discountPrice: "8000",
+      actualPrice: 7200,
+      discountPrice: 8000,
       discount: "-10%",
     },
     seller: "Urban Trove",
@@ -134,7 +133,7 @@ const productData = [
       "BALMAIN Pastel-Print Tulle Dress, Lorem ipsum dolor sit amet consectetur adipisicing elit. Non fugitquod expedita maxime, quidem minus et? Expedita temporibus porrodolore deleniti exercitationem rem? Necessitatibus aspernaturtemporibus, repudiandae dolore pariatur ad. ",
   },
   {
-    id: 7,
+    id: "57755332455",
     mainImage: polo,
     otherImage1: polo,
     otherImage2: polo,
@@ -146,8 +145,8 @@ const productData = [
       url: "/products",
     },
     price: {
-      actualPrice: "18000",
-      discountPrice: "20000",
+      actualPrice: 18000,
+      discountPrice: 20000,
       discount: "-11%",
     },
     seller: "Urban Trove",
@@ -155,7 +154,7 @@ const productData = [
       "Polo Ralph Lauren Active Bear Collar T-Shirt White, Lorem ipsum dolor sit amet consectetur adipisicing elit. Non fugitquod expedita maxime, quidem minus et? Expedita temporibus porrodolore deleniti exercitationem rem? Necessitatibus aspernaturtemporibus, repudiandae dolore pariatur ad. ",
   },
   {
-    id: 8,
+    id: "78887654433",
     mainImage: sunglass,
     otherImage1: sunglass,
     otherImage2: sunglass,
@@ -166,8 +165,8 @@ const productData = [
       url: "/products",
     },
     price: {
-      actualPrice: "301000",
-      discountPrice: "350000",
+      actualPrice: 301000,
+      discountPrice: 350000,
       discount: "-14%",
     },
     seller: "Urban Trove",
@@ -175,6 +174,13 @@ const productData = [
       "Ray-Bans Meta Smart Glasses, Lorem ipsum dolor sit amet consectetur adipisicing elit. Non fugitquod expedita maxime, quidem minus et? Expedita temporibus porrodolore deleniti exercitationem rem? Necessitatibus aspernaturtemporibus, repudiandae dolore pariatur ad. ",
   },
 ];
-const ProductMiniheader = ['Clothing', 'Shoes', 'Accessories', 'Bags', 'Skincare Products', 'Gadgets'];
+const ProductMiniheader = [
+  "Clothing",
+  "Shoes",
+  "Accessories",
+  "Bags",
+  "Skincare Products",
+  "Gadgets",
+];
 
 export { productData, ProductMiniheader };

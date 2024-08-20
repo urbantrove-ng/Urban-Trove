@@ -126,7 +126,7 @@ export default function SignupPage() {
                     {/* Username */}
                     <div className="flex flex-col mb-3">
                       <div className="relative">
-                        <span>Name</span>{" "}
+                        <span>Name</span>
                         <InputText
                           id="name"
                           autocomplete="Name"
@@ -136,14 +136,14 @@ export default function SignupPage() {
                           updateFormValue={updateFormValue}
                           className="text-sm placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full md:py-2 py-3 focus:outline-none focus:border-emerald-400"
                           placeholder="Full Name"
-                        />{" "}
+                        />
                       </div>
                     </div>
 
                     {/* Email Id */}
                     <div className="flex flex-col mb-3">
                       <div className="relative">
-                        <span>Email Address</span>{" "}
+                        <span>Email Address</span>
                         <InputText
                           id="email"
                           defaultValue={registerObj.email}
@@ -161,10 +161,10 @@ export default function SignupPage() {
                     <div className="flex flex-col mb-3">
                       <div className="relative">
                         {/* <div className="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
-                          {" "}
+                          
                           Pasword
                         </div> */}
-                        <span>Password</span>{" "}
+                        <span>Password</span>
                         <InputText
                           id="password"
                           defaultValue={registerObj.password}
@@ -181,7 +181,7 @@ export default function SignupPage() {
                     {/* Confirm Password */}
                     <div className="flex flex-col mb-6">
                       <div className="relative">
-                        <span>Confirm Password</span>{" "}
+                        <span>Confirm Password</span>
                         <InputText
                           id="confirm_password"
                           defaultValue={registerObj.confirm_password}

@@ -1,52 +1,57 @@
-import React from "react";
 import MiniHeader from "./MiniHeader";
 import { servicesData } from "../../data/ServiceData";
-import MiniServicesHeader from "./MiniServicesHeader";
 import { useNavigate } from "react-router-dom";
 
 export default function Services() {
   const navigate = useNavigate();
 
-  function servicedetails(name) {
-    navigate(`/services/${name}`);
-  }
+
   return (
-    <>
-      <MiniHeader />
-      <MiniServicesHeader />
-      <div className="my-[2rem] md:my-[0.5rem] mx-[1rem] sm:mx-[0.2rem] md:mx-[0.4rem] 1sm:mt-[12rem] sm:mt-[10.5rem] bg-[#e5e5e5] p-[2rem] sm:p-[0.9rem] md:p-[0.5rem] grid grid-cols-4 1sm:grid-cols-2 md:grid-cols-3 gap-[1rem] sm:gap-[0.6rem] justify-center font-roboto">
-        {servicesData.map((service) => {
-          const { image, startingPrice, services, name } = service;
-
-          const actualPrice = parseFloat(startingPrice);
-          const formattedPrice = actualPrice.toLocaleString();
-
-          return (
-            // <div className="services-content">
-            <div
-              className="bg-white flex flex-col justify-center cursor-pointer transition duration-300 rounded-[5px] hover:shadow-1xl"
-              key={service.id}
-              onClick={() => servicedetails(name)}
-            >
-              <div className="h-[14rem] md:h-[10rem] sm:h-[7rem] w-full flex justify-center self-center">
-                <img className="w-full h-full" src={image} alt="" />
-              </div>
-              <div className="py-[0.3rem] px-[0.5rem] grid">
-                <h3 className="font-[700] md:font-[600] h-[2.7rem] md:mt-[-0.3rem]">{name}</h3>
-                <h5 className="font-[500] text-[0.9rem] text-[#737373] h-[2.1rem] sm:h-[2.65rem] sm:line-clamp-2">
-                  {services}
-                </h5>
-                <h6 className="font-[600] text-[#333] sm:leading-4">
-                  Prices starting from: &#8358;{formattedPrice}
-                </h6>
-                <button className="py-[0.5rem] border-[1px] border-primaryOne rounded-[3px] text-primaryOne sm:text-white bg-white sm:bg-primaryOne cursor-pointer transition duration-300 mt-[3px] hover:text-white hover:bg-primaryOne">
-                  Book A Reservation
-                </button>
-              </div>
+    <section className=" flex justify-center items-center">
+      <div>
+        <MiniHeader />
+        <div className="bg-white py-6">
+          <div className="">
+            <div className="mt-8 grid  lg:grid-cols-4 grid-cols-1 gap-8 lg:gap-0">
+              {servicesData.map((product) => (
+                <div key={product.id}>
+                  <div className="relative group h-56 lg:h-[25rem]">
+                    <div className="relative lg:h-72 h-40 w-[343px] overflow-hidden rounded-lg">
+                      <img
+                        alt={product.header}
+                        src={product.image}
+                        className="lg:h-full lg:w-full object-cover object-center  group-hover:scale-105 transition-all ease duration-300"
+                      />
+                    </div>
+                    <div className="relative mt-4">
+                      <h3 className="text-sm font-medium text-gray-900">
+                        {product.name}
+                      </h3>
+                      <p className="mt-1 text-sm text-gray-500">
+                        {product.services}
+                      </p>
+                    </div>
+                    <div
+                      className="absolute inset-x-0 top-0 flex lg:h-72 h-40 cursor-pointer items-end justify-end overflow-hidden rounded-lg p-4"
+                      onClick={() => navigate(`/services/${product.name}`)}
+                    ></div>
+                    <p className="relative text-md font-semibold text-black ">
+                      Starting Price: ₦ {product.startingPrice}
+                    </p>
+                  </div>
+                  <button
+                    href={product.href}
+                    className="relative flex items-center cursor-pointer justify-center rounded-md border border-transparent bg-primaryTwo w-[343px] py-2 text-sm font-medium text-white hover:bg-primaryOne"
+                  >
+                    Book A Reservation
+                    <span className="sr-only">, {product.name}</span>
+                  </button>
+                </div>
+              ))}
             </div>
-          );
-        })}
+          </div>
+        </div>
       </div>
-    </>
+    </section>
   );
 }

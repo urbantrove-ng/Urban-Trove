@@ -1,0 +1,24 @@
+/* Shimmer.module.css */
+.shimmerWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #f6f7f8 8%, #e2e2e2 38%, #f6f7f8 54%);
+  background-size: 1000px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}

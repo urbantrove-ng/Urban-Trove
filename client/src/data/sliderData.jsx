@@ -1,8 +1,8 @@
-import restaurant from "../assets/image/restaurant.jpeg";
-import girlstore from "../assets/image/varieties.jpeg";
-import skincare from "../assets/image/skincarestore.jpeg";
-import sneakers from "../assets/image/sneakers.avif";
-import salon from "../assets/image/mensalon.jpeg";
+import restaurant from "../assets/image/restaurant.webp";
+import girlstore from "../assets/image/varieties.webp";
+import skincare from "../assets/image/skincarestore.webp";
+import sneakers from "../assets/image/sneakers.webp";
+import salon from "../assets/image/mensalon.webp";
 
 const sliderData = [
   {
