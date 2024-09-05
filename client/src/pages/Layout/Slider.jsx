@@ -9,6 +9,7 @@ export default function Slider() {
       infiniteLoop
       showStatus={false}
       showArrows={false}
+      showThumbs={false}
     >
       {sliderData.map((slides) => {
         const { image, caption } = slides;

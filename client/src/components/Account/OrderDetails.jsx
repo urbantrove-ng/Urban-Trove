@@ -3,14 +3,14 @@
 import { format } from "date-fns";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useUrban } from "../../context/UrbanContext";
+import { UrbanContext} from "../../context/UrbanContext";
 
 export default function OrderDetails() {
   const { id } = useParams();
   const [orders, setOrders] = useState([]);
-  const { auth } = useUrban();
+   const {auth} = useContext(UrbanContext);
   const axiosPrivate = useAxiosPrivate();
   const getSingleOrders = async () => {
     const response = await axiosPrivate.get(`/user/order/${id}`, {

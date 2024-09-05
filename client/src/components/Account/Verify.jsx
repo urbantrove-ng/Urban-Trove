@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "../../Api/axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { useUrban } from "../../context/UrbanContext";
+import { UrbanContext } from "../../context/UrbanContext";
 import logo from "../../assets/image/logo.png";
 function Verify() {
   const [isVerified, setIsVerified] = useState(false);
@@ -9,8 +9,7 @@ function Verify() {
   const [isAlreadyVerified, setIsAlreadyVerified] = useState(false);
 
   const [verify, setverify] = useState(false);
-
-  const { setAuth } = useUrban();
+ const  { setAuth }  = useContext(UrbanContext);
 
   const params = useParams();
 

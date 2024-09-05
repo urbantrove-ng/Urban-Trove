@@ -1,12 +1,11 @@
 import { HomeIcon } from "@heroicons/react/20/solid";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function MiniHeader() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { category, subcategory } = useParams();
 
-
-  const name = location.pathname.split("/");
   return (
     <nav
       aria-label="Breadcrumb"
@@ -41,9 +40,27 @@ export default function MiniHeader() {
             <a
               href={location.pathname}
               aria-current={location.pathname ? "page" : undefined}
-              className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700 first-letter:uppercase"
+              className="ml-4 lg:text-sm text-[0.8rem] font-medium text-gray-500 hover:text-gray-700 first-letter:uppercase"
             >
-              {name[1]}
+              {category == "catalog" ? "All Products" : category}
+            </a>
+            <svg
+              fill="currentColor"
+              viewBox="0 0 24 44"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+              className="h-full w-6 flex-shrink-0 text-gray-200"
+            >
+              <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
+            </svg>
+            <a
+              href={location.pathname}
+              aria-current={location.pathname ? "page" : undefined}
+              className="ml-4 lg:text-sm text-[0.8rem]  font-medium text-gray-500 hover:text-gray-700 first-letter:uppercase"
+            >
+              {subcategory.startsWith("q")
+                ? subcategory.split("=")[1].slice(0, 20) + "..."
+                : subcategory}
             </a>
           </div>
         </li>

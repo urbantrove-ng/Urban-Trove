@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import axios from "../../Api/axios";
-import { useUrban } from "../../context/UrbanContext";
+import { UrbanContext } from "../../context/UrbanContext";
 import Spinner from "../../components/Spinner";
 import { Link, useNavigate } from "react-router-dom";
 function Login() {
@@ -8,7 +8,7 @@ function Login() {
   const [errMsg, SetErrMsg] = useState("");
   const [isVerified, setIsVerified] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
-  const { setAuth } = useUrban();
+  const { setAuth } = useContext(UrbanContext);
   const errRef = useRef();
 
   const navigate = useNavigate();
@@ -32,19 +32,14 @@ function Login() {
           withCredentials: true,
         }
       );
-
-      if (response.data.code === 200 && response?.data?.data.role == "user") {
+      console.log(response);
+      if (response.data.code === 200) {
         setAuth({
           ...response.data.data,
           accessToken: response.data.data.accessToken,
         });
 
         navigate(-1);
-      } else if (
-        response?.data?.data.role === "admin" ||
-        response?.data?.data.role === "merchant"
-      ) {
-        throw new Error("Unauthorized user.");
       }
     } catch (err) {
       if (err.response) {

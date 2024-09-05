@@ -29,7 +29,7 @@ export default function Homepage() {
                 <h6 className="lg:text-[1.3rem] font-light text-[#7f7f7f] ">
                   {header}
                 </h6>
-                <div className="bg-white flex justify-center items-center hover:drop-shadow-2xl xl:w-full xl:h-[320px] lg:w-[120px] h-[200px] w-[180px] lg:h-[120px] rounded-lg">
+                <div className="bg-white flex justify-center items-center hover:drop-shadow-2xl xl:w-full xl:h-[320px] lg:w-[120px] h-[200px] w-full lg:h-[120px] rounded-lg">
                   <div className="flex flex-col items-center lg:gap-0 gap-6">
                     <div className="">
                       <NavLink to="/products">

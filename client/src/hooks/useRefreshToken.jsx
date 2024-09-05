@@ -1,14 +1,15 @@
+import { useContext } from "react";
 import axios from "../Api/axios";
-import { useUrban } from "../context/UrbanContext";
+import { UrbanContext } from "../context/UrbanContext";
 const useRefreshToken = () => {
-  const { setAuth } = useUrban();
+  const { setAuth } = useContext(UrbanContext);
 
   const refresh = async () => {
     const response = await axios.get("/auth/refresh", {
       withCredentials: true,
     });
 
-    if (response.data.code === 200 && response?.data?.data.role == "user") {
+    if (response.data.code === 200 ) {
       setAuth({
         ...response.data.data,
         accessToken: response.data.data.accessToken,

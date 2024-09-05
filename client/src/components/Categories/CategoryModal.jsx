@@ -1,6 +1,6 @@
 "use client";
-import { useEffect } from "react";
-import { useUrban } from "../../context/UrbanContext";
+import { useContext, useEffect } from "react";
+import { UrbanContext } from "../../context/UrbanContext";
 
 const CategoryModal = ({ children }) => {
   useEffect(() => {
@@ -8,13 +8,11 @@ const CategoryModal = ({ children }) => {
       document.body.style.overflow = "auto";
     };
   }, []);
-  const { handleCloseModal, isModalOpen } = useUrban();
+  const { handleCloseModal, isModalOpen } = useContext(UrbanContext);
   const handleClick = (e) => {
     e.stopPropagation();
   };
-  const modalClass = isModalOpen
-    ? ""
-    : "hidden";
+  const modalClass = isModalOpen ? "" : "hidden";
 
   return (
     <div

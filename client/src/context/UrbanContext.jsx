@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect, useMemo } from "react";
-import axios from "../Api/axios";
+import { createContext, useState, useEffect, useMemo } from "react";
+import axios, { axiosPrivate } from "../Api/axios";
 
 const UrbanContext = createContext();
 
@@ -12,17 +12,12 @@ const UrbanProvider = ({ children }) => {
 
   const [removedFromCart, setRemovedFromCart] = useState(false);
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [product, setProduct] = useState([]);
   const [auth, setAuth] = useState({});
+  const totalSum = data?.reduce((sum, item) => sum + item.total, 0);
+  const totalNumber = data?.reduce((sum, item) => sum + item.quantity, 0);
 
-  const totalSum = useMemo(() => {
-    return data?.reduce((sum, item) => Number(sum) + Number(item.total), 0);
-  }, [data]);
-
-  const totalNumber = useMemo(() => {
-    return data?.reduce((sum, item) => Number(sum) + Number(item.quantity), 0);
-  }, [data]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -33,24 +28,26 @@ const UrbanProvider = ({ children }) => {
     setIsModalOpen(false);
     document.body.style.overflow = "auto";
   };
-
   const addToCart = async (id) => {
     setIsClickedAdd(true);
     try {
-      const res = await fetch("https://urbantrove.adaptable.app/api/v1/cart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-        credentials: "include",
-      });
-      const data = await res.json();
-      if (data.code == 200) {
+      const res = await axiosPrivate.post(
+        "/cart",
+        { id },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true, // This is equivalent to credentials: "include" in Fetch
+        }
+      );
+
+      if (res.status === 200) {
         await fetchCart();
         setIsClickedAdd(false);
         setAddedToCart(true);
       }
+
       setTimeout(() => {
         setAddedToCart(false);
       }, 2000);
@@ -58,38 +55,49 @@ const UrbanProvider = ({ children }) => {
       setIsClickedAdd(false);
     }
   };
-
   const removeItemfromCart = async (id) => {
     setIsClickedRemove(true);
 
     try {
-      const response = await axios.delete("/cart", {
-        data: { id },
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
+      const res = await axiosPrivate.delete("/cart", {
+        data: { id }, // data property is required to send the body in a DELETE request
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true, // This is equivalent to credentials: "include" in Fetch
       });
-      console.log(response.status);
-      if (response.status == 200) {
-        await fetchCart();
 
-        setRemovedFromCart(true);
+      if (res.status === 200) {
+        await fetchCart();
         setIsClickedRemove(false);
+        setRemovedFromCart(true);
       }
+
       setTimeout(() => {
         setRemovedFromCart(false);
       }, 2000);
     } catch (error) {
       setIsClickedRemove(false);
+      // Optionally handle error here
+      console.error("Error removing item from cart:", error);
     }
   };
 
   const fetchCart = async () => {
-    const response = await axios.get("/cart", {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
-    const data = response?.data?.data?.cart;
-    setData(data);
+    try {
+      const response = await axiosPrivate.get("/cart", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        const cartData = response?.data?.data;
+        setData(cartData);
+      } else {
+        console.error("Failed to fetch cart data");
+      }
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+    }
   };
 
   useEffect(() => {
@@ -101,6 +109,7 @@ const UrbanProvider = ({ children }) => {
       value={{
         product,
         setProduct,
+        fetchCart,
         totalSum,
         totalNumber,
         isModalOpen,
@@ -128,12 +137,4 @@ const UrbanProvider = ({ children }) => {
   );
 };
 
-const useUrban = () => {
-  const context = useContext(UrbanContext);
-  if (context === undefined) {
-    throw new Error("useUrban must be used within an UrbanProvider");
-  }
-  return context;
-};
-
-export { UrbanProvider, useUrban };
+export { UrbanProvider, UrbanContext };

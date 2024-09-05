@@ -116,8 +116,8 @@ function SignupPage() {
         </div>
       )}
       {isSignedUp && (
-        <div className=" flex justify-center text-center items-center">
-          <div>
+        <div className=" flex justify-center text-center items-center lg:pt-72 pt-72">
+          <div className=" flex flex-col items-center"> 
             <h1 className=" text-3xl">🎉 Almost there!</h1>
             <p className=" text-2xl">We&apos;ve sent you an email at </p>
             <p className=" text-2xl">{email}</p>

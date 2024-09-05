@@ -44,7 +44,9 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/services" element={<Services />} />
             <Route path="/verify/:id" element={<Verify />} />
-            <Route path="/products" element={<Products />} />
+            <Route path="/:category/:subcategory" element={<Products />} />
+            <Route path="/catalog" element={<Products />} />
+
             <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/services/:name" element={<ServiceDetails />} />
             <Route element={<ProtectedRoutes />}>

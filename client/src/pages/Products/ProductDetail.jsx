@@ -11,8 +11,8 @@ import {
 import { StarIcon } from "@heroicons/react/20/solid";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useUrban } from "../../context/UrbanContext";
+import { useContext, useEffect, useState } from "react";
+import { UrbanContext } from "../../context/UrbanContext";
 import axios from "../../Api/axios";
 import { ShimmerButton, ShimmerDiv } from "shimmer-effects-react";
 import Spinner from "../../components/Spinner";
@@ -24,14 +24,14 @@ function classNames(...classes) {
 export default function ProductDetail() {
   const { id } = useParams();
   const [product, setProductData] = useState(null);
-  const {
+   const {
     addToCart,
     setData,
     removeItemfromCart,
-
+    fetchCart,
     isClickedAdd,
     isClickedRemoved,
-  } = useUrban();
+  } = useContext(UrbanContext);
   const [addMoreItem, setAddMoreItem] = useState(false);
   const [counter, setCounter] = useState(0);
 
@@ -45,14 +45,6 @@ export default function ProductDetail() {
   }, []);
 
   useEffect(() => {
-    const fetchCart = async () => {
-      const response = await axios.get("/cart", {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-      const data = response?.data?.data?.cart;
-      setData(data);
-    };
     fetchCart();
   }, [setData, addMoreItem]);
 
@@ -213,7 +205,7 @@ export default function ProductDetail() {
                     >
                       -
                     </button>
-                    {isClickedAdd||isClickedRemoved ? (
+                    {isClickedAdd || isClickedRemoved ? (
                       <Spinner />
                     ) : (
                       <p className=" w-[24px] h-[24px] flex justify-center items-center">

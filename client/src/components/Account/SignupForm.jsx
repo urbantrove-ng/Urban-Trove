@@ -1,14 +1,13 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import axios from "../../Api/axios";
-import { useUrban } from "../../context/UrbanContext";
+import { UrbanContext} from "../../context/UrbanContext";
 import Spinner from "../../components/Spinner";
 import { Link, useNavigate } from "react-router-dom";
 import FormHeader from "../../components/Account/FormHeader";
 function SignupForm() {
   const [email, setEmail] = useState("");
   const [errMsg, SetErrMsg] = useState("");
-
-  const { setAuth } = useUrban();
+ const {setAuth} = useContext(UrbanContext);
   const errRef = useRef();
   const navigate = useNavigate();
   const [logining, setLogining] = useState(false);
@@ -31,7 +30,6 @@ function SignupForm() {
         }
       );
 
-      console.log(response);
       if (response.data.code === 200) {
         const result = response?.data?.data;
         const { accessToken, email } = result;
@@ -43,7 +41,6 @@ function SignupForm() {
         });
       }
     } catch (err) {
-      console.log(err?.response);
       setLogining(false);
       if (err?.response?.status == 401) {
         SetErrMsg(err?.response?.data?.data?.msg);

@@ -5,11 +5,11 @@ import {
   XMarkIcon as XMarkIconMini,
 } from "@heroicons/react/20/solid";
 import Spinner from "../Spinner";
-import axios from "../../Api/axios";
-import { useEffect, useState } from "react";
-import { useUrban } from "../../context/UrbanContext";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UrbanContext } from "../../context/UrbanContext";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+// import useFetchPrivate from "../../hooks/useFetchPrivate";
 
 const relatedProducts = [
   {
@@ -32,12 +32,12 @@ export default function Cart() {
     removeItemfromCart,
     totalSum,
     auth,
-    isClickedAdd,
-    isClickedRemoved,
-  } = useUrban();
+    fetchCart,
+  } = useContext(UrbanContext);
   const [checkingout, setCheckingout] = useState(false);
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
+  //  const fetchPrivate = useFetchPrivate();
   const [loadingItems, setLoadingItems] = useState({});
 
   const onHandleAddItems = async (id) => {
@@ -52,14 +52,6 @@ export default function Cart() {
     setLoadingItems((prev) => ({ ...prev, [id]: false }));
   };
 
-  const fetchCart = async () => {
-    const response = await axios.get("/cart", {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
-    const data = response?.data?.data?.cart;
-    setData(data);
-  };
   useEffect(() => {
     fetchCart();
   }, [setData]);
@@ -71,7 +63,7 @@ export default function Cart() {
       withCredentials: true,
     });
     const ordeerid = res?.data?.data?.order?._id;
-    if (res.status === 200) {
+    if (res.status === 201) {
       setCheckingout(false);
       const response = await axiosPrivate.post(
         "/payment",
@@ -89,7 +81,6 @@ export default function Cart() {
       }
     }
   };
-  console.log(data);
   return (
     <div className="bg-white pt-20">
       <main className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 ">

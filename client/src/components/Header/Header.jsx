@@ -9,13 +9,14 @@ import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { BsPatchQuestion } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { BsQuestionCircle } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Logo from "../../assets/image/logo.png";
-import { useEffect, useState } from "react";
-import { useUrban } from "../../context/UrbanContext";
+import { useContext, useEffect, useState } from "react";
+import { UrbanContext } from "../../context/UrbanContext";
 import CategoryModal from "../Categories/CategoryModal";
 import Category from "../Categories/Category";
 import useLogOut from "../Account/useLogOut";
+import axios from "../../Api/axios";
 
 export default function Header() {
   const [isHoveredAccount, setIsHoveredAccount] = useState(false);
@@ -28,17 +29,94 @@ export default function Header() {
     totalNumber: counter,
     addedToCart,
     removedFromCart,
-  } = useUrban();
-  const [fashion, setFashion] = useState(false);
-  const [electronic, setElectronics] = useState(false);
-  const [home, setHome] = useState(false);
-  const [health, setHealth] = useState(false);
-  const [Sports, setSports] = useState(false);
-  const [Books, setBooks] = useState(false);
-  const [Food, setFood] = useState(false);
-  const [Electrical, setElectrical] = useState(false);
-  const [automMobile, setAutomobile] = useState(false);
+    setProductData,
+  } = useContext(UrbanContext);
   const [showCategory, setShowCategory] = useState(true);
+  const [searchProduct, setSearchProduct] = useState("");
+  const categories = [
+    {
+      name: "Fashion & Accessories",
+      subcategories: [
+        "Clothing (Men's, Women's, Children's)",
+        "Shoes & Footwear",
+        "Handbags & Accessories",
+        "Jewelry & Watches",
+      ],
+    },
+    {
+      name: "Electronics & Gadgets",
+      subcategories: [
+        "Smartphones & Tablets",
+        "Computers & Laptops",
+        "Cameras & Photography Equipment",
+        "Audio & Video Devices",
+      ],
+    },
+    {
+      name: "Home & Garden",
+      subcategories: [
+        "Furniture & Decor",
+        "Kitchenware & Cooking Utensils",
+        "Home Appliances",
+        "Gardening Supplies",
+      ],
+    },
+    {
+      name: "Health & Beauty",
+      subcategories: [
+        "Skincare Products",
+        "Haircare Products",
+        "Makeup & Cosmetics",
+        "Personal Care Appliances",
+      ],
+    },
+    {
+      name: "Sports & Outdoors",
+      subcategories: [
+        "Athletic Apparel & Footwear",
+        "Sports Equipment",
+        "Camping & Hiking Gear",
+        "Outdoor Recreation Accessories",
+      ],
+    },
+    {
+      name: "Books & Stationery",
+      subcategories: [
+        "Fiction & Non-fiction Books",
+        "Office Supplies",
+        "Writing Instruments",
+        "Art Supplies",
+      ],
+    },
+    {
+      name: "Food & Beverages",
+      subcategories: [
+        "Gourmet Foods & Snacks",
+        "Beverages",
+        "Specialty Ingredients",
+        "Cooking & Baking Supplies",
+      ],
+    },
+    {
+      name: "Electrical & Home Appliances",
+      subcategories: [
+        "Kitchen Appliances",
+        "Laundry Appliances",
+        "Vacuum Cleaners",
+        "Air Conditioners & Fans",
+      ],
+    },
+    {
+      name: "Automotive & Accessories",
+      subcategories: [
+        "Car Parts & Accessories",
+        "Car Care Products",
+        "Automotive Electronics",
+        "Vehicle Maintenance Tools",
+      ],
+    },
+  ];
+  const navigate = useNavigate();
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -69,6 +147,27 @@ export default function Header() {
     setIsHoveredAccount(false);
   };
   const shortHashEmail = auth?.email ? `${auth?.email.slice(0, 4)}....` : "";
+  const [expandedIndex, setExpandedIndex] = useState(null);
+  const toggleCategory = (index) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  const [setcategory, subcategory] = useState("");
+
+  const getProductByCategory = async (subcat) => {
+    setOpen(false);
+    try {
+      const response = await axios.get(`/categories`, {
+        params: { selectedSubcategory: subcat },
+      });
+      if (response.status === 200) {
+        setProductData(response.data?.data?.products);
+        navigate(`/${setcategory}/${subcat}`);
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
   const firstname = auth?.fullname?.split(" ")[0];
   const name = auth.fullname ? firstname : shortHashEmail;
   const Logout = useLogOut();
@@ -76,6 +175,24 @@ export default function Header() {
     window.alert("Are you sure you want to logout?");
 
     if (window.confirm) Logout();
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      searchProductByName();
+    }
+  };
+
+  const searchProductByName = async () => {
+    try {
+      const response = await axios.get(`/search?q=${searchProduct}`);
+      if (response.status === 200) {
+        setProductData(response.data?.data?.products);
+        navigate(`/catalog/q=${searchProduct}`);
+        setSearchProduct("");
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
   };
 
   return (
@@ -169,713 +286,89 @@ export default function Header() {
                       <li className="h-[48px] hover:bg-white font-semibold px-2 flex justify-around border-t-2 border-gray-400  gap-0  items-center w-full   cursor-pointer">
                         All Categories
                       </li>
-                      <li
-                        className={
-                          !fashion
-                            ? " h-[48px] hover:bg-white px-2 flex justify-around border-y-2 border-gray-400  gap-0  items-center w-full   cursor-pointer"
-                            : " bg-white   hover:bg-white px-2 border-y-2 border-gray-400  gap-0  items-center w-full   cursor-pointer "
-                        }
-                      >
-                        <div className=" flex items-center w-full">
-                          <p
+                      {categories.map((category, index) => {
+                        return (
+                          <li
+                            key={index}
                             className={
-                              !fashion
-                                ? " w-full h-[48px] flex justify-start items-center"
-                                : "w-full h-[48px] flex justify-start items-center font-semibold"
+                              expandedIndex != index
+                                ? " h-[48px] hover:bg-white px-2 flex justify-around border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer"
+                                : " bg-white    hover:bg-white px-2 border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer "
                             }
                           >
-                            Fashion & Accessories{" "}
-                          </p>
-                          {!fashion ? (
-                            <svg
-                              onClick={() => {
-                                setFashion(true);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300"
+                            <div className=" flex items-center w-full ">
+                              <p
+                                className={
+                                  expandedIndex != index
+                                    ? " w-full h-[48px] flex justify-start items-center"
+                                    : "w-full h-[48px] flex justify-start items-center font-semibold"
+                                }
+                              >
+                                {category.name}
+                              </p>
+                              {expandedIndex != index ? (
+                                <svg
+                                  onClick={() => {
+                                    toggleCategory(index);
+                                    subcategory(category.name);
+                                  }}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="1.5"
+                                  stroke="currentColor"
+                                  className="h-full w-6 flex-shrink-0 transform transition-transform duration-300"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M12 4.5v15m7.5-7.5h-15"
+                                  />
+                                </svg>
+                              ) : (
+                                <svg
+                                  onClick={() => toggleCategory(index)}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="1.5"
+                                  stroke="currentColor"
+                                  className="h-full w-6 flex-shrink-0 transform transition-transform duration-300 rotate-180"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M5 12h14"
+                                  />
+                                </svg>
+                              )}
+                            </div>
+                            <div
+                              className={
+                                expandedIndex === index
+                                  ? " lg:hidden  flex flex-col  gap-4 transition-all duration-300 transform"
+                                  : " hidden "
+                              }
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              onClick={() => {
-                                setFashion(false);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300 rotate-180"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 12h14"
-                              />
-                            </svg>
-                          )}
-                        </div>
-
-                        <div
-                          className={
-                            fashion
-                              ? " lg:hidden  flex flex-col  gap-4"
-                              : " hidden "
-                          }
-                        >
-                          <ul className=" flex flex-col  gap-4 ">
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Clothing (Men&apos;s, Women&apos;s,
-                              Children&apos;s)
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Shoes & Footwear
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Handbags & Accessories
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Jewelry & Watches
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                      {/* {electronic} */}
-                      <li
-                        className={
-                          !electronic
-                            ? " h-[48px] hover:bg-white px-2 flex justify-around border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer"
-                            : " bg-white  hover:bg-white px-2 border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer "
-                        }
-                      >
-                        <div className=" flex items-center w-full">
-                          <p
-                            className={
-                              !electronic
-                                ? " w-full h-[48px] flex justify-start items-center"
-                                : "w-full h-[48px] flex justify-start items-center font-semibold"
-                            }
-                          >
-                            Electronics & Gadgets
-                          </p>
-                          {!electronic ? (
-                            <svg
-                              onClick={() => {
-                                setElectronics(true);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              onClick={() => {
-                                setElectronics(false);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300 rotate-180"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 12h14"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <div
-                          className={
-                            electronic
-                              ? " lg:hidden  flex flex-col  gap-4"
-                              : " hidden "
-                          }
-                        >
-                          <ul className=" flex flex-col  gap-4 ">
-                            <li className="h-[38px]  hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Smartphones & Tablets
-                            </li>
-                            <li className="h-[38px]  hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Computers & Laptops
-                            </li>
-                            <li className="h-[38px]  hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Cameras & Photography Equipment
-                            </li>
-                            <li className="h-[38px]  hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Audio & Video Devices
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                      {/* {home} */}
-                      <li
-                        className={
-                          !home
-                            ? " h-[48px] hover:bg-white px-2 flex justify-around border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer"
-                            : " bg-white  pl-4   hover:bg-white px-2 border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer "
-                        }
-                      >
-                        <div className=" flex items-center w-full">
-                          <p
-                            className={
-                              !home
-                                ? " w-full h-[48px] flex justify-start items-center"
-                                : "w-full h-[48px] flex justify-start items-center font-semibold"
-                            }
-                          >
-                            Home & Garden
-                          </p>
-                          {!home ? (
-                            <svg
-                              onClick={() => {
-                                setHome(true);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              onClick={() => {
-                                setHome(false);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300 rotate-180"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 12h14"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <div
-                          className={
-                            home
-                              ? " lg:hidden  flex flex-col  gap-4"
-                              : " hidden "
-                          }
-                        >
-                          <ul className=" flex flex-col  gap-4 ">
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Furniture & Decor
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Kitchenware & Cooking Utensils
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Home Appliances
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Gardening Supplies
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                      {/* {health} */}
-                      <li
-                        className={
-                          !health
-                            ? " h-[48px] hover:bg-white px-2 flex justify-around border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer"
-                            : " bg-white   hover:bg-white px-2 border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer "
-                        }
-                      >
-                        <div className=" flex items-center w-full ">
-                          <p
-                            className={
-                              !health
-                                ? " w-full h-[48px] flex justify-start items-center"
-                                : "w-full h-[48px] flex justify-start items-center font-semibold"
-                            }
-                          >
-                            Health & Beauty
-                          </p>
-                          {!health ? (
-                            <svg
-                              onClick={() => {
-                                setHealth(true);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              onClick={() => {
-                                setHealth(false);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300 rotate-180"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 12h14"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <div
-                          className={
-                            health
-                              ? " lg:hidden  flex flex-col  gap-4"
-                              : " hidden "
-                          }
-                        >
-                          <ul className=" flex flex-col  gap-4 ">
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Skincare Products
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Haircare Products
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Makeup & Cosmetics
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Personal Care Appliances
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-
-                      <li
-                        className={
-                          !Sports
-                            ? " h-[48px] hover:bg-white px-2 flex justify-around border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer"
-                            : " bg-white    hover:bg-white px-2 border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer "
-                        }
-                      >
-                        <div className=" flex items-center w-full ">
-                          <p
-                            className={
-                              !Sports
-                                ? " w-full h-[48px] flex justify-start items-center"
-                                : "w-full h-[48px] flex justify-start items-center font-semibold"
-                            }
-                          >
-                            Sports & Outdoors
-                          </p>
-                          {!Sports ? (
-                            <svg
-                              onClick={() => {
-                                setSports(true);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              onClick={() => {
-                                setSports(false);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300 rotate-180"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 12h14"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <div
-                          className={
-                            Sports
-                              ? " lg:hidden  flex flex-col  gap-4"
-                              : " hidden "
-                          }
-                        >
-                          <ul className=" flex flex-col  gap-4 ">
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Athletic Apparel & Footwear{" "}
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Sports Equipment (e.g., yoga mats, weights,
-                              bicycles){" "}
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Camping & Hiking Gear{" "}
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Outdoor Recreation Accessories{" "}
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li
-                        className={
-                          !Books
-                            ? " h-[48px] hover:bg-white px-2 flex justify-around border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer"
-                            : " bg-white    hover:bg-white px-2 border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer "
-                        }
-                      >
-                        <div className=" flex items-center w-full ">
-                          <p
-                            className={
-                              !Books
-                                ? " w-full h-[48px] flex justify-start items-center"
-                                : "w-full h-[48px] flex justify-start items-center font-semibold"
-                            }
-                          >
-                            Books & Stationery
-                          </p>
-                          {!Books ? (
-                            <svg
-                              onClick={() => {
-                                setBooks(true);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              onClick={() => {
-                                setBooks(false);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300 rotate-180"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 12h14"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <div
-                          className={
-                            Books
-                              ? " lg:hidden  flex flex-col  gap-4"
-                              : " hidden "
-                          }
-                        >
-                          <ul className=" flex flex-col  gap-4 ">
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Fiction & Non-fiction Books
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Office Supplies
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Writing Instruments
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Art Supplies
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li
-                        className={
-                          !Food
-                            ? " h-[48px] hover:bg-white px-2 flex justify-around border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer"
-                            : " bg-white    hover:bg-white px-2 border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer "
-                        }
-                      >
-                        <div className=" flex items-center w-full ">
-                          <p
-                            className={
-                              !Food
-                                ? " w-full h-[48px] flex justify-start items-center"
-                                : "w-full h-[48px] flex justify-start items-center font-semibold"
-                            }
-                          >
-                            Food & Beverages
-                          </p>
-                          {!Food ? (
-                            <svg
-                              onClick={() => {
-                                setFood(true);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              onClick={() => {
-                                setFood(false);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300 rotate-180"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 12h14"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <div
-                          className={
-                            Food
-                              ? " lg:hidden  flex flex-col  gap-4"
-                              : " hidden "
-                          }
-                        >
-                          <ul className=" flex flex-col  gap-4 ">
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Gourmet Foods & Snacks
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Beverages (e.g., coffee, tea, wine)
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Specialty Ingredients
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Cooking & Baking Supplies
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li
-                        className={
-                          !Electrical
-                            ? " h-[48px] hover:bg-white px-2 flex justify-around border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer"
-                            : " bg-white    hover:bg-white px-2 border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer "
-                        }
-                      >
-                        <div className=" flex items-center w-full ">
-                          <p
-                            className={
-                              !Electrical
-                                ? " w-full h-[48px] flex justify-start items-center"
-                                : "w-full h-[48px] flex justify-start items-center font-semibold"
-                            }
-                          >
-                            Electrical & Home Appliances
-                          </p>
-                          {!Electrical ? (
-                            <svg
-                              onClick={() => {
-                                setElectrical(true);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              onClick={() => {
-                                setElectrical(false);
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300 rotate-180"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 12h14"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <div
-                          className={
-                            Electrical
-                              ? " lg:hidden  flex flex-col  gap-4"
-                              : " hidden "
-                          }
-                        >
-                          {" "}
-                          <ul className=" flex flex-col  gap-4 ">
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center w-[300px]">
-                              Kitchen Appliances ( blenders, toasters, coffee
-                              makers)
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Laundry Appliances
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Vacuum Cleaners
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Air Conditioners & Fans
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li
-                        className={
-                          !automMobile
-                            ? " h-[48px] hover:bg-white px-2 flex justify-around border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer"
-                            : " bg-white    hover:bg-white px-2 border-b-2 border-gray-400  gap-0  items-center w-full   cursor-pointer "
-                        }
-                      >
-                        <div className=" flex items-center w-full ">
-                          <p
-                            className={
-                              !automMobile
-                                ? " w-full h-[48px] flex justify-start items-center"
-                                : "w-full h-[48px] flex justify-start items-center font-semibold"
-                            }
-                          >
-                            Automotive & Accessories
-                          </p>
-                          {!automMobile ? (
-                            <svg
-                              onClick={() => setAutomobile(true)}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              onClick={() => setAutomobile(false)}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="h-full w-6 flex-shrink-0 transform transition-transform duration-300 rotate-180"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 12h14"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <div
-                          className={
-                            automMobile
-                              ? " lg:hidden  flex flex-col  gap-4 transition-all duration-300 transform"
-                              : " hidden "
-                          }
-                        >
-                          <ul className=" flex flex-col  gap-4 ">
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Car Parts & Accessories
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Car Care Products
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Automotive Electronics
-                            </li>
-                            <li className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center">
-                              Vehicle Maintenance Tools
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
+                              <ul className=" flex flex-col  gap-4 ">
+                                {category.subcategories.map(
+                                  (subcategory, subIndex) => (
+                                    <li
+                                      key={subIndex}
+                                      onClick={() =>
+                                        getProductByCategory(subcategory)
+                                      }
+                                      className="h-[38px] hover:cursor-pointer hover:text-red-500 border-b-2 flex justify-start items-center"
+                                    >
+                                      {subcategory}
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            </div>
+                          </li>
+                        );
+                      })}
                     </ul>
                   )}
                 </div>
@@ -906,10 +399,14 @@ export default function Header() {
             <div className="relative lg:flex-col  border-[0.5px] border-black rounded-full flex justify-center items-center w-full">
               <input
                 id="search"
+                value={searchProduct}
+                onChange={(e) => setSearchProduct(e.target.value)}
+                onKeyDown={handleKeyDown}
                 className=" outline-none bg-[#f3f4f6] p-2 rounded-full transition-all duration-200 focus:outline-none lg:focus:w-[504px] lg:w-[448px] lg:h-[41.6px] h-[30px] w-full"
                 placeholder="Search Products and Services"
               />
               <button
+                onClick={() => searchProductByName()}
                 type="button"
                 className="absolute right-2 top-2 bottom-2 flex items-center justify-center"
               >
@@ -1151,7 +648,7 @@ export default function Header() {
           </div>
         </nav>
         <CategoryModal>
-          <Category />
+          <Category onClose={setOpen} />
         </CategoryModal>
       </div>
     </header>
