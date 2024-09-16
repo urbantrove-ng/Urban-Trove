@@ -2,7 +2,6 @@ import { useState } from "react";
 import { forgotFields } from "../../constant/formFields";
 import FormAction from "../../components/Account/FormAction";
 import Input from "../../components/Account/input";
-import FormHeader from "../../components/Account/FormHeader";
 import FormFooter from "../../components/Account/FormFooter";
 import axios from "../../Api/axios";
 import Spinner from "../../components/Spinner";
@@ -40,7 +39,6 @@ export default function ForgetPass() {
       setReseting(false);
       setIsresetting(false);
     }
-    console.log(forgetPassState.email);
   };
 
   return (

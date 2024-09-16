@@ -58,7 +58,7 @@ function SignupForm() {
         <FormHeader />
 
         <div className="flex flex-col items-center w-full max-w-md p-4 bg-[#FEFAFA]  rounded ">
-          <h3 className="text-center text-[3.2rem] font-bold mb-6">Sign In</h3>
+          <h3 className="text-center text-[3.2rem] font-bold text-black mb-6">Sign In</h3>
           <form
             className="flex flex-col gap-4 items-center  bg-[#FEFAFA]   "
             onSubmit={onHandleSubmit}

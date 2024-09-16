@@ -278,32 +278,15 @@ export default function Cart() {
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900"> ₦5,000</dd>
+                  <dd className="text-sm font-medium text-gray-900"> To be communicated via email</dd>
                 </div>
-                <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                  <dt className="flex text-sm text-gray-600">
-                    <span>Tax estimate</span>
-                    <a className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                      <span className="sr-only">
-                        Learn more about how tax is calculated
-                      </span>
-                      <QuestionMarkCircleIcon
-                        aria-hidden="true"
-                        className="h-5 w-5"
-                      />
-                    </a>
-                  </dt>
-                  <dd className="text-sm font-medium text-gray-900">
-                    {" "}
-                    ₦{totalSum * 0.75}
-                  </dd>
-                </div>
+             
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="text-base font-medium text-gray-900">
                     Order total
                   </dt>
                   <dd className="text-base font-medium text-gray-900">
-                    ₦{(totalSum + 5000 + totalSum * 0.75).toLocaleString()}{" "}
+                    ₦{(totalSum).toLocaleString()}{" "}
                   </dd>
                 </div>
               </dl>

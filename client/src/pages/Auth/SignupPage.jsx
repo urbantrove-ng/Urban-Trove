@@ -51,7 +51,7 @@ function SignupPage() {
       {!isSignedUp && (
         <div className="flex justify-center  h-full text-black items-center w-full   bg-[#FEFAFA] ">
           <div className="flex flex-col items-center w-full max-w-md p-4 bg-[#FEFAFA]  rounded ">
-            <h3 className="text-center text-[3.2rem] font-bold mb-6">
+            <h3 className="text-center text-[3.2rem] text-black font-bold mb-6">
               Sign Up
             </h3>
             <form
@@ -73,6 +73,7 @@ function SignupPage() {
                 </label>
                 <input
                   value={email}
+                  required
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email address..."
                   id="email"
@@ -89,6 +90,7 @@ function SignupPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="***********"
                   id="password"
+                  required
                   type={showPassword ? "text" : "password"}
                   className="outline-none border-b-2 p-2 lg:w-[400px] w-[300px]"
                 />
@@ -99,6 +101,13 @@ function SignupPage() {
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>
+              </div>
+              <div className="flex justify-center items-center gap-4">
+                <input id="terms" type="checkbox" required />
+                <h4 className=" flex gap-2 " htmlFor="terms">
+                  <p>I Agree to the </p>
+                  <Link to="/Terms&Conditions" className=" text-primaryOne">Terms and Conditions</Link>
+                </h4>
               </div>
 
               <div className="flex gap-6 items-center mt-6">
@@ -117,7 +126,7 @@ function SignupPage() {
       )}
       {isSignedUp && (
         <div className=" flex justify-center text-center items-center lg:pt-72 pt-72">
-          <div className=" flex flex-col items-center"> 
+          <div className=" flex flex-col items-center">
             <h1 className=" text-3xl">🎉 Almost there!</h1>
             <p className=" text-2xl">We&apos;ve sent you an email at </p>
             <p className=" text-2xl">{email}</p>

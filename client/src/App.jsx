@@ -29,6 +29,7 @@ import OrderDetails from "./components/Account/OrderDetails";
 import OrdersList from "./components/Account/OrdersList";
 import Verify from "./components/Account/Verify";
 import Reset from "./pages/Auth/Reset";
+import Terms from "./components/Terms_and_Conditions/Terms";
 function App() {
   const location = useLocation();
 
@@ -43,6 +44,7 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/Terms&Conditions" element={<Terms />} />
             <Route path="/verify/:id" element={<Verify />} />
             <Route path="/:category/:subcategory" element={<Products />} />
             <Route path="/catalog" element={<Products />} />

@@ -16,7 +16,7 @@ const productData = [
     details: "Cute Leather Bag For Women",
     link: {
       text: "Begin Shopping",
-      url: "/products",
+      url: "/Fashion%20&%20Accessories/Handbags%20&%20Accessories",
     },
     price: {
       actualPrice: 9900,
@@ -38,7 +38,7 @@ const productData = [
     details: "Nude Heels",
     link: {
       text: "Begin Shopping",
-      url: "/products",
+      url: "/Fashion%20&%20Accessories/Shoes%20&%20Footwear",
     },
     price: {
       actualPrice: 18750,
@@ -59,7 +59,7 @@ const productData = [
     details: "Urban Trove Skincare Package",
     link: {
       text: "Begin Shopping",
-      url: "/products",
+      url: "/Health%20&%20Beauty/Skincare%20Products",
     },
     price: {
       actualPrice: 13050,
@@ -80,7 +80,7 @@ const productData = [
     details: "JBL Heaphones 360pmw",
     link: {
       text: "Begin Shopping",
-      url: "/products",
+      url: "/Electronics%20&%20Gadgets/Audio%20&%20Video%20Devices",
     },
     price: {
       actualPrice: 19240,
@@ -100,7 +100,7 @@ const productData = [
     details: "Addidas Men's White Forum 84 Low Sneakers",
     link: {
       text: "Begin Shopping",
-      url: "/products",
+      url: "/Fashion%20&%20Accessories/Shoes%20&%20Footwear",
     },
     price: {
       actualPrice: 32680,
@@ -121,7 +121,7 @@ const productData = [
     details: "BALMAIN Pastel-Print Tulle Dress",
     link: {
       text: "Begin Shopping",
-      url: "/products",
+      url: "/Fashion%20&%20Accessories/Clothing%20(Men's,%20Women's,%20Children's)",
     },
     price: {
       actualPrice: 7200,
@@ -142,7 +142,7 @@ const productData = [
     details: "Polo Ralph Lauren Active Bear Collar T-Shirt White",
     link: {
       text: "Begin Shopping",
-      url: "/products",
+      url: "/Fashion%20&%20Accessories/Clothing%20(Men's,%20Women's,%20Children's)",
     },
     price: {
       actualPrice: 18000,
@@ -162,7 +162,7 @@ const productData = [
     details: "Ray-Bans Meta Smart Glasses",
     link: {
       text: "Begin Shopping",
-      url: "/products",
+      url: "/Fashion%20&%20Accessories/Jewelry%20&%20Watches",
     },
     price: {
       actualPrice: 301000,

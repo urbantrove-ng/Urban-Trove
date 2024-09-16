@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import Slider from "./Slider";
 import { useNavigate } from "react-router-dom";
 
-
 export default function Homepage() {
   const navigate = useNavigate();
 
@@ -23,7 +22,7 @@ export default function Homepage() {
             return (
               <div
                 className="rounded-[10px] flex flex-col pt-4 gap-2 items-center cursor-pointer"
-                onClick={() => navigate("/products")}
+                onClick={() => navigate(product?.link?.url)}
                 key={product.id}
               >
                 <h6 className="lg:text-[1.3rem] font-light text-[#7f7f7f] ">
@@ -32,7 +31,7 @@ export default function Homepage() {
                 <div className="bg-white flex justify-center items-center hover:drop-shadow-2xl xl:w-full xl:h-[320px] lg:w-[120px] h-[200px] w-full lg:h-[120px] rounded-lg">
                   <div className="flex flex-col items-center lg:gap-0 gap-6">
                     <div className="">
-                      <NavLink to="/products">
+                      <NavLink to={product?.link?.url}>
                         <img
                           className=" xl:w-[260px] xl:h-[220px] lg:w-[90px] lg:h-[80px] w-[100px] h-[100px]"
                           src={mainImage}
@@ -40,7 +39,7 @@ export default function Homepage() {
                         />
                       </NavLink>
                     </div>
-                    <NavLink to="/products">
+                    <NavLink to={product?.link?.url}>
                       <button className="text-[#677e11] flex items-center gap-2 hover:gap-4 transition-all duration-300 ease-in-out">
                         {link.text} <span>&rarr;</span>
                       </button>
